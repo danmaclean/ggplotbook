@@ -1,0 +1,6 @@
+book_filename: "ggplot2"
+chapter_name: "Topic "
+output_dir: docs
+clean: ["docs"]
+rmd_files: ["index.Rmd", "01-motivation.Rmd", "02-r-fundamentals.Rmd", "03-ggplot2-tour.Rmd", "04-geoms.Rmd", "05-factors_facets.Rmd", "06-rmarkdown.Rmd", "07-themes.Rmd", "08-data-loading.Rmd"]
+new_session: yes
