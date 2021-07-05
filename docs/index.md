@@ -2,7 +2,7 @@
 title: "Using ggplot2 for producing plots"
 author: "Dan MacLean"
 description: "An introductory course for producing meaningful plots in R"
-date: "2019-10-25"
+date: "2021-07-05"
 site: bookdown::bookdown_site
 output:
   bookdown::gitbook: default

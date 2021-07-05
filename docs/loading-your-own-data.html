@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Topic 9 Loading your own data | Using ggplot2 for producing plots</title>
   <meta name="description" content="An introductory course for producing meaningful plots in R" />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Topic 9 Loading your own data | Using ggplot2 for producing plots" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Dan MacLean" />
 
 
-<meta name="date" content="2019-10-25" />
+<meta name="date" content="2021-07-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="visual-customisation.html"/>
 
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,28 +49,34 @@
 
 
 
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -77,9 +85,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -112,6 +120,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 </head>
 
 <body>
@@ -124,70 +133,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> ggplot2</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> ggplot2</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#installing-r"><i class="fa fa-check"></i><b>1.2</b> Installing R</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#installing-rstudio"><i class="fa fa-check"></i><b>1.3</b> Installing RStudio</a></li>
-<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#installing-r-packages-in-rstudio."><i class="fa fa-check"></i><b>1.4</b> Installing R packages in RStudio.</a><ul>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#installing-r-packages-in-rstudio."><i class="fa fa-check"></i><b>1.4</b> Installing R packages in RStudio.</a>
+<ul>
 <li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#standard-packages"><i class="fa fa-check"></i><b>1.4.1</b> Standard packages</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="motivation.html"><a href="motivation.html"><i class="fa fa-check"></i><b>2</b> Motivation</a><ul>
+<li class="chapter" data-level="2" data-path="motivation.html"><a href="motivation.html"><i class="fa fa-check"></i><b>2</b> Motivation</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="motivation.html"><a href="motivation.html#variability-in-measurements"><i class="fa fa-check"></i><b>2.1</b> Variability in measurements</a></li>
 <li class="chapter" data-level="2.2" data-path="motivation.html"><a href="motivation.html#summarising-your-data-can-lead-to-wrong-conclusions"><i class="fa fa-check"></i><b>2.2</b> Summarising your data can lead to wrong conclusions</a></li>
-<li class="chapter" data-level="2.3" data-path="motivation.html"><a href="motivation.html#p---one-value-to-fool-them-all"><i class="fa fa-check"></i><b>2.3</b> <em>p</em> - one value to fool them all?</a><ul>
+<li class="chapter" data-level="2.3" data-path="motivation.html"><a href="motivation.html#p---one-value-to-fool-them-all"><i class="fa fa-check"></i><b>2.3</b> <em>p</em> - one value to fool them all?</a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="motivation.html"><a href="motivation.html#ten-thousand-random-numbers"><i class="fa fa-check"></i><b>2.3.1</b> Ten Thousand Random Numbers</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="motivation.html"><a href="motivation.html#ggplot2-an-r-package-for-beautiful-visualisations"><i class="fa fa-check"></i><b>2.4</b> <em>ggplot2</em> An R package for beautiful visualisations</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="r-fundamentals.html"><a href="r-fundamentals.html"><i class="fa fa-check"></i><b>3</b> R Fundamentals</a><ul>
+<li class="chapter" data-level="3" data-path="r-fundamentals.html"><a href="r-fundamentals.html"><i class="fa fa-check"></i><b>3</b> R Fundamentals</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="r-fundamentals.html"><a href="r-fundamentals.html#about-this-chapter"><i class="fa fa-check"></i><b>3.1</b> About this chapter</a></li>
 <li class="chapter" data-level="3.2" data-path="r-fundamentals.html"><a href="r-fundamentals.html#working-with-r"><i class="fa fa-check"></i><b>3.2</b> Working with R</a></li>
-<li class="chapter" data-level="3.3" data-path="r-fundamentals.html"><a href="r-fundamentals.html#variables"><i class="fa fa-check"></i><b>3.3</b> Variables</a><ul>
+<li class="chapter" data-level="3.3" data-path="r-fundamentals.html"><a href="r-fundamentals.html#variables"><i class="fa fa-check"></i><b>3.3</b> Variables</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="r-fundamentals.html"><a href="r-fundamentals.html#using-objects-and-functions"><i class="fa fa-check"></i><b>3.3.1</b> Using objects and functions</a></li>
 </ul></li>
 <li class="chapter" data-level="3.4" data-path="r-fundamentals.html"><a href="r-fundamentals.html#quiz"><i class="fa fa-check"></i><b>3.4</b> Quiz</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html"><i class="fa fa-check"></i><b>4</b> <em>ggplot2</em> Tour</a><ul>
+<li class="chapter" data-level="4" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html"><i class="fa fa-check"></i><b>4</b> <em>ggplot2</em> Tour</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#about-this-chapter-1"><i class="fa fa-check"></i><b>4.1</b> About this chapter</a></li>
-<li class="chapter" data-level="4.2" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#building-a-plot-with-ggplot2"><i class="fa fa-check"></i><b>4.2</b> Building a plot with <em>ggplot2</em></a><ul>
+<li class="chapter" data-level="4.2" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#building-a-plot-with-ggplot2"><i class="fa fa-check"></i><b>4.2</b> Building a plot with <em>ggplot2</em></a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#loading-the-iris-test-data"><i class="fa fa-check"></i><b>4.2.1</b> Loading the iris test data</a></li>
 <li class="chapter" data-level="4.2.2" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#a-first-plot"><i class="fa fa-check"></i><b>4.2.2</b> A first plot</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#mappings-versus-assignment"><i class="fa fa-check"></i><b>4.3</b> Mappings versus assignment</a></li>
 <li class="chapter" data-level="4.4" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#quiz-1"><i class="fa fa-check"></i><b>4.4</b> Quiz</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="common-geoms.html"><a href="common-geoms.html"><i class="fa fa-check"></i><b>5</b> Common Geoms</a><ul>
+<li class="chapter" data-level="5" data-path="common-geoms.html"><a href="common-geoms.html"><i class="fa fa-check"></i><b>5</b> Common Geoms</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="common-geoms.html"><a href="common-geoms.html#about-this-chapter-2"><i class="fa fa-check"></i><b>5.1</b> About this chapter</a></li>
-<li class="chapter" data-level="5.2" data-path="common-geoms.html"><a href="common-geoms.html#continuous-geoms"><i class="fa fa-check"></i><b>5.2</b> Continuous geoms</a><ul>
+<li class="chapter" data-level="5.2" data-path="common-geoms.html"><a href="common-geoms.html#continuous-geoms"><i class="fa fa-check"></i><b>5.2</b> Continuous geoms</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="common-geoms.html"><a href="common-geoms.html#geom_smooth"><i class="fa fa-check"></i><b>5.2.1</b> geom_smooth()</a></li>
 <li class="chapter" data-level="5.2.2" data-path="common-geoms.html"><a href="common-geoms.html#whats-the-r2"><i class="fa fa-check"></i><b>5.2.2</b> What’s the r<sup>2</sup>?</a></li>
 <li class="chapter" data-level="5.2.3" data-path="common-geoms.html"><a href="common-geoms.html#geom_jitter"><i class="fa fa-check"></i><b>5.2.3</b> geom_jitter()</a></li>
 <li class="chapter" data-level="5.2.4" data-path="common-geoms.html"><a href="common-geoms.html#changing-opacity"><i class="fa fa-check"></i><b>5.2.4</b> Changing opacity</a></li>
 <li class="chapter" data-level="5.2.5" data-path="common-geoms.html"><a href="common-geoms.html#geom_histogram"><i class="fa fa-check"></i><b>5.2.5</b> geom_histogram()</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="common-geoms.html"><a href="common-geoms.html#discrete-geoms"><i class="fa fa-check"></i><b>5.3</b> Discrete geoms</a><ul>
+<li class="chapter" data-level="5.3" data-path="common-geoms.html"><a href="common-geoms.html#discrete-geoms"><i class="fa fa-check"></i><b>5.3</b> Discrete geoms</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="common-geoms.html"><a href="common-geoms.html#geom_point-and-geom_jitter"><i class="fa fa-check"></i><b>5.3.1</b> geom_point() and geom_jitter()</a></li>
 <li class="chapter" data-level="5.3.2" data-path="common-geoms.html"><a href="common-geoms.html#geom_boxplot-and-geom_violin"><i class="fa fa-check"></i><b>5.3.2</b> geom_boxplot() and geom_violin()</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="common-geoms.html"><a href="common-geoms.html#quiz-2"><i class="fa fa-check"></i><b>5.4</b> Quiz</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html"><i class="fa fa-check"></i><b>6</b> Using Factors to Subset Data and Plots</a><ul>
+<li class="chapter" data-level="6" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html"><i class="fa fa-check"></i><b>6</b> Using Factors to Subset Data and Plots</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html#about-this-chapter-3"><i class="fa fa-check"></i><b>6.1</b> About this chapter</a></li>
 <li class="chapter" data-level="6.2" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html#factors"><i class="fa fa-check"></i><b>6.2</b> Factors</a></li>
 <li class="chapter" data-level="6.3" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html#colouring-by-factors"><i class="fa fa-check"></i><b>6.3</b> Colouring by factors</a></li>
 <li class="chapter" data-level="6.4" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html#small-multiple-plots"><i class="fa fa-check"></i><b>6.4</b> Small multiple plots</a></li>
 <li class="chapter" data-level="6.5" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html#quiz-3"><i class="fa fa-check"></i><b>6.5</b> Quiz</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html"><i class="fa fa-check"></i><b>7</b> Using RMarkdown for Reproducible Publishable Plots</a><ul>
+<li class="chapter" data-level="7" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html"><i class="fa fa-check"></i><b>7</b> Using RMarkdown for Reproducible Publishable Plots</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html#about-this-chapter-4"><i class="fa fa-check"></i><b>7.1</b> About this chapter</a></li>
 <li class="chapter" data-level="7.2" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html#being-lazy-is-a-virtue.-work-hard-to-be-lazy."><i class="fa fa-check"></i><b>7.2</b> Being lazy is a virtue. Work hard to be lazy.</a></li>
-<li class="chapter" data-level="7.3" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html#r-markdown"><i class="fa fa-check"></i><b>7.3</b> R Markdown</a><ul>
+<li class="chapter" data-level="7.3" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html#r-markdown"><i class="fa fa-check"></i><b>7.3</b> R Markdown</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html#a-new-r-markdown-document"><i class="fa fa-check"></i><b>7.3.1</b> A new R Markdown document</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html#quiz-4"><i class="fa fa-check"></i><b>7.4</b> Quiz</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="visual-customisation.html"><a href="visual-customisation.html"><i class="fa fa-check"></i><b>8</b> Visual Customisation</a><ul>
+<li class="chapter" data-level="8" data-path="visual-customisation.html"><a href="visual-customisation.html"><i class="fa fa-check"></i><b>8</b> Visual Customisation</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="visual-customisation.html"><a href="visual-customisation.html#themes"><i class="fa fa-check"></i><b>8.1</b> Themes</a></li>
 <li class="chapter" data-level="8.2" data-path="visual-customisation.html"><a href="visual-customisation.html#quiz-5"><i class="fa fa-check"></i><b>8.2</b> Quiz</a></li>
 <li class="chapter" data-level="8.3" data-path="visual-customisation.html"><a href="visual-customisation.html#the-theme-function"><i class="fa fa-check"></i><b>8.3</b> The <code>theme()</code> function</a></li>
@@ -195,16 +219,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.5" data-path="visual-customisation.html"><a href="visual-customisation.html#changing-the-limits-of-a-continuous-scale"><i class="fa fa-check"></i><b>8.5</b> Changing the limits of a continuous scale</a></li>
 <li class="chapter" data-level="8.6" data-path="visual-customisation.html"><a href="visual-customisation.html#quiz-6"><i class="fa fa-check"></i><b>8.6</b> Quiz</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html"><i class="fa fa-check"></i><b>9</b> Loading your own data</a><ul>
+<li class="chapter" data-level="9" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html"><i class="fa fa-check"></i><b>9</b> Loading your own data</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#tidy-data"><i class="fa fa-check"></i><b>9.1</b> Tidy data</a></li>
 <li class="chapter" data-level="9.2" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#getting-your-data-into-tidy-format"><i class="fa fa-check"></i><b>9.2</b> Getting your data into tidy format</a></li>
-<li class="chapter" data-level="9.3" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#loading-in-a-csv-file"><i class="fa fa-check"></i><b>9.3</b> Loading in a CSV file</a><ul>
+<li class="chapter" data-level="9.3" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#loading-in-a-csv-file"><i class="fa fa-check"></i><b>9.3</b> Loading in a CSV file</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#read_csv"><i class="fa fa-check"></i><b>9.3.1</b> read_csv()</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#finding-the-file"><i class="fa fa-check"></i><b>9.4</b> Finding the file</a><ul>
+<li class="chapter" data-level="9.4" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#finding-the-file"><i class="fa fa-check"></i><b>9.4</b> Finding the file</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#make-it-easy-on-yourself"><i class="fa fa-check"></i><b>9.4.1</b> Make it easy on yourself</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#making-sure-the-data-types-are-correct"><i class="fa fa-check"></i><b>9.5</b> Making sure the data types are correct</a><ul>
+<li class="chapter" data-level="9.5" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#making-sure-the-data-types-are-correct"><i class="fa fa-check"></i><b>9.5</b> Making sure the data types are correct</a>
+<ul>
 <li class="chapter" data-level="9.5.1" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#parser-functions"><i class="fa fa-check"></i><b>9.5.1</b> Parser functions</a></li>
 </ul></li>
 <li class="chapter" data-level="9.6" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#quiz-7"><i class="fa fa-check"></i><b>9.6</b> Quiz</a></li>
@@ -226,7 +254,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="loading-your-own-data" class="section level1">
+<div id="loading-your-own-data" class="section level1" number="9">
 <h1><span class="header-section-number">Topic 9</span> Loading your own data</h1>
 <ol style="list-style-type: decimal">
 <li>Questions:</li>
@@ -250,7 +278,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Data needs to be in a particular format for <code>ggplot</code> to work</li>
 <li>Specifying the data type is sometimes necessary when creating a data frame.</li>
 </ul>
-<div id="tidy-data" class="section level2">
+<div id="tidy-data" class="section level2" number="9.1">
 <h2><span class="header-section-number">9.1</span> Tidy data</h2>
 <p>There are many ways to structure data. Here are two quite common ones.</p>
 <table>
@@ -420,15 +448,15 @@ b
 </table>
 <p>Now each variable has a column, and each seperate observation of the data has its own row. It is <em>much</em> more verbose for a human, but R can use this easily because we are now explicit about what is called what and how it relates to everything else.</p>
 </div>
-<div id="getting-your-data-into-tidy-format" class="section level2">
+<div id="getting-your-data-into-tidy-format" class="section level2" number="9.2">
 <h2><span class="header-section-number">9.2</span> Getting your data into tidy format</h2>
 <p>The bad news here is that there is no magic function to make your data tidy. If you have an existing table then you can do this manually in Excel or some other spreadsheet package. If you have lots of data, it is possible to do it programmatically in R, see the <code>dplyr</code> and <code>tidyr</code> packages, which are complex but designed for this purpose. Also have a look at the cheat-sheet here <a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf</a>.</p>
 </div>
-<div id="loading-in-a-csv-file" class="section level2">
+<div id="loading-in-a-csv-file" class="section level2" number="9.3">
 <h2><span class="header-section-number">9.3</span> Loading in a CSV file</h2>
 <p>R can deal with a lot of file formats, but the most common and easily used one is ‘csv’, a comma-separated value file. These can be exported from virtually any spreadsheet program so it’s a good interchange format to get data into R from wherever you already have it. Loading a file is done easily with the <code>readr</code> package`.</p>
 <p><code>readr</code> is a tool for loading data into R. It can be loaded on its own with <code>library(readr)</code>. We will use <code>readr</code> to load in data from a ‘flat’ <code>.csv</code> file.</p>
-<div id="read_csv" class="section level3">
+<div id="read_csv" class="section level3" number="9.3.1">
 <h3><span class="header-section-number">9.3.1</span> read_csv()</h3>
 <p>The main function is <code>read_csv()</code> which can read a standard comma seperated values file from disk into an R dataframe. There are a few variants of <code>read_csv()</code> which may be appropriate for different sorts of <code>.csv</code> file, but they all work the same.</p>
 <ul>
@@ -437,39 +465,12 @@ b
 <li><code>read_delim()</code> - reads files delimited by an arbitrary character</li>
 </ul>
 <p>The first argument to <code>read_csv()</code> is the path to the file to read. Here I’ll read a file on my Desktop that contains the diamonds data we’ve been using.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1"><span class="kw">library</span>(readr)</a>
-<a class="sourceLine" id="cb101-2" data-line-number="2"><span class="kw">read_csv</span>(<span class="st">&quot;~/Desktop/diamonds.csv&quot;</span>)</a></code></pre></div>
-<pre><code>## Parsed with column specification:
-## cols(
-##   carat = col_double(),
-##   cut = col_character(),
-##   color = col_character(),
-##   clarity = col_character(),
-##   depth = col_double(),
-##   table = col_double(),
-##   price = col_double(),
-##   x = col_double(),
-##   y = col_double(),
-##   z = col_double()
-## )</code></pre>
-<pre><code>## # A tibble: 53,940 x 10
-##    carat cut       color clarity depth table price     x     y     z
-##    &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 0.23  Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
-##  2 0.21  Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
-##  3 0.23  Good      E     VS1      56.9    65   327  4.05  4.07  2.31
-##  4 0.290 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
-##  5 0.31  Good      J     SI2      63.3    58   335  4.34  4.35  2.75
-##  6 0.24  Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48
-##  7 0.24  Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47
-##  8 0.26  Very Good H     SI1      61.9    55   337  4.07  4.11  2.53
-##  9 0.22  Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
-## 10 0.23  Very Good H     VS1      59.4    61   338  4     4.05  2.39
-## # … with 53,930 more rows</code></pre>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="loading-your-own-data.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb102-2"><a href="loading-your-own-data.html#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">&quot;~/Desktop/diamonds.csv&quot;</span>)</span></code></pre></div>
 <p>This will create an object called a dataframe that can be used just like the built-in data.</p>
 </div>
 </div>
-<div id="finding-the-file" class="section level2">
+<div id="finding-the-file" class="section level2" number="9.4">
 <h2><span class="header-section-number">9.4</span> Finding the file</h2>
 <p>R needs to be given the correct and full path to a file. This means the full address of the file on the hard disk of your computer. R doesn’t have a file chooser so you need to know how to write this down.</p>
 <p>Computer file systems are laid out in folders and sub-folders with files inside them. Conceptually, this results in a tree of folders and a path down the branches from the root of the tree to everything else. The root gets called ‘/’ on Mac/Linux computers and ’C:' on Windows computers</p>
@@ -477,7 +478,7 @@ b
 <em>source:</em> <a href="http://swcarpentry.github.io/shell-novice/fig/home-directories.svg">Software Carpentry</a></p>
 <p>This picture of an example file system shows how that is formed. When we write this down, everytime we go inside a new folder we use a slash to show we’ve changed folder. Most computer systems have a ‘Users’ or similar folder in which each users stuff is stored. Supposing we’re in Larry’s folder then the path would be <code>/Users/larry</code>. And a file called <code>my_file.txt</code> in that folder would be <code>/Users/larry/my_file.txt</code>.</p>
 <p>So to write the full file path for R we can use this pattern, the first bit would be <code>/Users/username/</code> (or <code>C:\Documents and Settings\username\</code> or <code>C:\Users\username\</code>) and then the set of folders within that user area follows on. If your file <code>my_file.txt</code> is on the Desktop the full path would be <code>/Users/username/Desktop/my_file.txt</code> (or <code>C:/Documents and Settings/username/Desktop/my_file.txt</code>)</p>
-<div id="make-it-easy-on-yourself" class="section level3">
+<div id="make-it-easy-on-yourself" class="section level3" number="9.4.1">
 <h3><span class="header-section-number">9.4.1</span> Make it easy on yourself</h3>
 <p>The easiest way not to have to think too hard about this stuff is to set up a consistent folder and file structure for every analysis and use RMarkdown documents to run your analysis. Here’s an example scheme:</p>
 <ol style="list-style-type: decimal">
@@ -486,50 +487,33 @@ b
 <li>Put your tidy csv file in the <code>raw</code> folder.</li>
 <li>Create a new R Markdown document and save it in the <code>disease_incidence_2019-11-01</code> folder.</li>
 </ol>
-<p>Now whenever you open and run that R Markdown document, the path of your input file is <code>&quot;raw/my_input_filename.csv&quot;</code>.
-You can save your plots with the <code>ggsave()</code> function to <code>&quot;output_images/filename.png&quot;</code> (don’t forget the quotes).</p>
+<p>Now whenever you open and run that R Markdown document, the path of your input file is <code>"raw/my_input_filename.csv"</code>.
+You can save your plots with the <code>ggsave()</code> function to <code>"output_images/filename.png"</code> (don’t forget the quotes).</p>
 <p>If you never mess around with the relative positions of the files and folders described, then the paths will always be the same. You can move the whole folder without worrying, just don’t jumble it’s contents.</p>
 </div>
 </div>
-<div id="making-sure-the-data-types-are-correct" class="section level2">
+<div id="making-sure-the-data-types-are-correct" class="section level2" number="9.5">
 <h2><span class="header-section-number">9.5</span> Making sure the data types are correct</h2>
 <p>When we load new data we need to make sure that any header has been properly parsed as column names, and that the columns have been identified as the right sort of data</p>
 <p>On loading with <code>readr</code> we see a column specification, <code>read_csv()</code> has guessed at what the columns should be and made those types. Its fine for the most part, but some of those columns we’d prefer to be factors. We can set our own column specification to force the column types on loading. We only have to do the ones that <code>read_csv()</code> gets wrong. Specifically, lets fix <code>cut</code> and <code>color</code> to a <code>factor</code>. We can do that with the <code>col_types</code> argument.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1"><span class="kw">read_csv</span>(<span class="st">&quot;~/Desktop/diamonds.csv&quot;</span>,</a>
-<a class="sourceLine" id="cb104-2" data-line-number="2">    <span class="dt">col_types =</span> <span class="kw">cols</span>(</a>
-<a class="sourceLine" id="cb104-3" data-line-number="3">      <span class="dt">cut =</span> <span class="kw">col_factor</span>(<span class="ot">NULL</span>),</a>
-<a class="sourceLine" id="cb104-4" data-line-number="4">      <span class="dt">color =</span> <span class="kw">col_factor</span>(<span class="ot">NULL</span>)</a>
-<a class="sourceLine" id="cb104-5" data-line-number="5">    )</a>
-<a class="sourceLine" id="cb104-6" data-line-number="6">)</a></code></pre></div>
-<pre><code>## # A tibble: 53,940 x 10
-##    carat cut       color clarity depth table price     x     y     z
-##    &lt;dbl&gt; &lt;fct&gt;     &lt;fct&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 0.23  Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
-##  2 0.21  Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
-##  3 0.23  Good      E     VS1      56.9    65   327  4.05  4.07  2.31
-##  4 0.290 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
-##  5 0.31  Good      J     SI2      63.3    58   335  4.34  4.35  2.75
-##  6 0.24  Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48
-##  7 0.24  Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47
-##  8 0.26  Very Good H     SI1      61.9    55   337  4.07  4.11  2.53
-##  9 0.22  Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
-## 10 0.23  Very Good H     VS1      59.4    61   338  4     4.05  2.39
-## # … with 53,930 more rows</code></pre>
-<div id="parser-functions" class="section level3">
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="loading-your-own-data.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">&quot;~/Desktop/diamonds.csv&quot;</span>,</span>
+<span id="cb103-2"><a href="loading-your-own-data.html#cb103-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
+<span id="cb103-3"><a href="loading-your-own-data.html#cb103-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">cut =</span> <span class="fu">col_factor</span>(<span class="cn">NULL</span>),</span>
+<span id="cb103-4"><a href="loading-your-own-data.html#cb103-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="fu">col_factor</span>(<span class="cn">NULL</span>)</span>
+<span id="cb103-5"><a href="loading-your-own-data.html#cb103-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb103-6"><a href="loading-your-own-data.html#cb103-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div id="parser-functions" class="section level3" number="9.5.1">
 <h3><span class="header-section-number">9.5.1</span> Parser functions</h3>
 <p>This works by assigning a parser function that returns a specific type to each column, here it’s <code>col_factor()</code>. There are parser functions for all types of data, and all of them can be used if <code>read_csv()</code> doesn’t guess your data properly. We won’t go into detail of all of them, just remember that if your numbers or dates or stuff won’t load properly, there’s a parser function that can help.</p>
 <p>Once the specification shows what you expect, then you are good to start analysing.</p>
 </div>
 </div>
-<div id="quiz-7" class="section level2">
+<div id="quiz-7" class="section level2" number="9.6">
 <h2><span class="header-section-number">9.6</span> Quiz</h2>
-<ol style="list-style-type: decimal">
-<li>Set up an analysis folder:
-<ol style="list-style-type: decimal">
-<li>Make a new folder called <code>analysis</code> on the Desktop</li>
-<li>Inside <code>analysis</code> make a new folder called <code>raw</code> and put <code>example_ros_data_flg22.xlsx</code> into it.</li>
-<li>Start a new R Markdown document and save it in <code>analysis</code></li>
-</ol></li>
+<pre><code>1. Make a new folder called `analysis` on the Desktop
+2. Inside `analysis` make a new folder called `raw` and put `example_ros_data_flg22.xlsx` into it.
+3. Start a new R Markdown document and save it in `analysis`</code></pre>
+<ol start="2" style="list-style-type: decimal">
 <li>Convert <code>raw/example_ros_data_flg22.xlsx</code> into a ‘tidy’ format .csv file and save to <code>raw</code></li>
 <li>Load in the data from the tidy file using <code>read.csv()</code> (Hint: You may need to save a csv version from Excel - R won’t read .xlsx files.)</li>
 <li>Check the datatypes and headers using <code>str()</code>, change them if necessary.</li>
@@ -550,11 +534,13 @@ You can save your plots with the <code>ggsave()</code> function to <code>&quot;o
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -562,12 +548,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -579,6 +565,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },

@@ -86,13 +86,6 @@ mean(numbers)
 
 Here we created a vector object with `rnorm(100)` and assigned it to the variable `numbers`. We than used the `mean()` function, passing it the variable `numbers`. The `mean()` function returned the mean of the hundred random numbers.
 
->## Bracket notation in this document
-> I'm going to use the following descriptions for the symbols `()`, `[]` and `{}`: 
->
-> `()` are brackets,
-> `[]` are square brackets
-> `{}` are curly brackets
-
 
 ## Quiz
 1. Create two variables, `a` and `b`: Add them. What happens if we change a and then re-add a and b?

@@ -67,7 +67,7 @@ The main function is `read_csv()` which can read a standard comma seperated valu
   
 The first argument to `read_csv()` is the path to the file to read. Here I'll read a file on my Desktop that contains the diamonds data we've been using.
 
-```{r,echo = TRUE, eval=TRUE}
+```{r,echo = TRUE, eval=FALSE}
 library(readr)
 read_csv("~/Desktop/diamonds.csv")
 ```
@@ -108,7 +108,7 @@ When we load new data we need to make sure that any header has been properly par
 
 On loading with `readr` we see a column specification, `read_csv()` has guessed at what the columns should be and made those types. Its fine for the most part, but some of those columns we'd prefer to be factors. We can set our own column specification to force the column types on loading. We only have to do the ones that `read_csv()` gets wrong. Specifically, lets fix `cut` and `color` to a `factor`. We can do that with the `col_types` argument.
 
-```{r}
+```{r,eval=FALSE}
 read_csv("~/Desktop/diamonds.csv",
     col_types = cols(
       cut = col_factor(NULL),
@@ -127,7 +127,6 @@ This works by assigning a parser function that returns a specific type to each c
 Once the specification shows what you expect, then you are good to start analysing. 
 
 ## Quiz
- 1. Set up an analysis folder:
 	1. Make a new folder called `analysis` on the Desktop
 	2. Inside `analysis` make a new folder called `raw` and put `example_ros_data_flg22.xlsx` into it.
 	3. Start a new R Markdown document and save it in `analysis`

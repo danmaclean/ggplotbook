@@ -35,6 +35,10 @@ By default, this isn't a simple line of best fit, as you can see the smoothed li
 p + geom_smooth(method = "lm", se = FALSE)
 ```
 
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
 <img src="04-geoms_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 ### What's the r<sup>2</sup>?

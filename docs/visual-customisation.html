@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Topic 8 Visual Customisation | Using ggplot2 for producing plots</title>
   <meta name="description" content="An introductory course for producing meaningful plots in R" />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Topic 8 Visual Customisation | Using ggplot2 for producing plots" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Dan MacLean" />
 
 
-<meta name="date" content="2019-10-25" />
+<meta name="date" content="2021-07-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="using-rmarkdown-for-reproducible-publishable-plots.html"/>
 <link rel="next" href="loading-your-own-data.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +41,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,28 +49,34 @@
 
 
 
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -77,9 +85,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -112,6 +120,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 </head>
 
 <body>
@@ -124,70 +133,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> ggplot2</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> ggplot2</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#installing-r"><i class="fa fa-check"></i><b>1.2</b> Installing R</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#installing-rstudio"><i class="fa fa-check"></i><b>1.3</b> Installing RStudio</a></li>
-<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#installing-r-packages-in-rstudio."><i class="fa fa-check"></i><b>1.4</b> Installing R packages in RStudio.</a><ul>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#installing-r-packages-in-rstudio."><i class="fa fa-check"></i><b>1.4</b> Installing R packages in RStudio.</a>
+<ul>
 <li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#standard-packages"><i class="fa fa-check"></i><b>1.4.1</b> Standard packages</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="motivation.html"><a href="motivation.html"><i class="fa fa-check"></i><b>2</b> Motivation</a><ul>
+<li class="chapter" data-level="2" data-path="motivation.html"><a href="motivation.html"><i class="fa fa-check"></i><b>2</b> Motivation</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="motivation.html"><a href="motivation.html#variability-in-measurements"><i class="fa fa-check"></i><b>2.1</b> Variability in measurements</a></li>
 <li class="chapter" data-level="2.2" data-path="motivation.html"><a href="motivation.html#summarising-your-data-can-lead-to-wrong-conclusions"><i class="fa fa-check"></i><b>2.2</b> Summarising your data can lead to wrong conclusions</a></li>
-<li class="chapter" data-level="2.3" data-path="motivation.html"><a href="motivation.html#p---one-value-to-fool-them-all"><i class="fa fa-check"></i><b>2.3</b> <em>p</em> - one value to fool them all?</a><ul>
+<li class="chapter" data-level="2.3" data-path="motivation.html"><a href="motivation.html#p---one-value-to-fool-them-all"><i class="fa fa-check"></i><b>2.3</b> <em>p</em> - one value to fool them all?</a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="motivation.html"><a href="motivation.html#ten-thousand-random-numbers"><i class="fa fa-check"></i><b>2.3.1</b> Ten Thousand Random Numbers</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="motivation.html"><a href="motivation.html#ggplot2-an-r-package-for-beautiful-visualisations"><i class="fa fa-check"></i><b>2.4</b> <em>ggplot2</em> An R package for beautiful visualisations</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="r-fundamentals.html"><a href="r-fundamentals.html"><i class="fa fa-check"></i><b>3</b> R Fundamentals</a><ul>
+<li class="chapter" data-level="3" data-path="r-fundamentals.html"><a href="r-fundamentals.html"><i class="fa fa-check"></i><b>3</b> R Fundamentals</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="r-fundamentals.html"><a href="r-fundamentals.html#about-this-chapter"><i class="fa fa-check"></i><b>3.1</b> About this chapter</a></li>
 <li class="chapter" data-level="3.2" data-path="r-fundamentals.html"><a href="r-fundamentals.html#working-with-r"><i class="fa fa-check"></i><b>3.2</b> Working with R</a></li>
-<li class="chapter" data-level="3.3" data-path="r-fundamentals.html"><a href="r-fundamentals.html#variables"><i class="fa fa-check"></i><b>3.3</b> Variables</a><ul>
+<li class="chapter" data-level="3.3" data-path="r-fundamentals.html"><a href="r-fundamentals.html#variables"><i class="fa fa-check"></i><b>3.3</b> Variables</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="r-fundamentals.html"><a href="r-fundamentals.html#using-objects-and-functions"><i class="fa fa-check"></i><b>3.3.1</b> Using objects and functions</a></li>
 </ul></li>
 <li class="chapter" data-level="3.4" data-path="r-fundamentals.html"><a href="r-fundamentals.html#quiz"><i class="fa fa-check"></i><b>3.4</b> Quiz</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html"><i class="fa fa-check"></i><b>4</b> <em>ggplot2</em> Tour</a><ul>
+<li class="chapter" data-level="4" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html"><i class="fa fa-check"></i><b>4</b> <em>ggplot2</em> Tour</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#about-this-chapter-1"><i class="fa fa-check"></i><b>4.1</b> About this chapter</a></li>
-<li class="chapter" data-level="4.2" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#building-a-plot-with-ggplot2"><i class="fa fa-check"></i><b>4.2</b> Building a plot with <em>ggplot2</em></a><ul>
+<li class="chapter" data-level="4.2" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#building-a-plot-with-ggplot2"><i class="fa fa-check"></i><b>4.2</b> Building a plot with <em>ggplot2</em></a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#loading-the-iris-test-data"><i class="fa fa-check"></i><b>4.2.1</b> Loading the iris test data</a></li>
 <li class="chapter" data-level="4.2.2" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#a-first-plot"><i class="fa fa-check"></i><b>4.2.2</b> A first plot</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#mappings-versus-assignment"><i class="fa fa-check"></i><b>4.3</b> Mappings versus assignment</a></li>
 <li class="chapter" data-level="4.4" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#quiz-1"><i class="fa fa-check"></i><b>4.4</b> Quiz</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="common-geoms.html"><a href="common-geoms.html"><i class="fa fa-check"></i><b>5</b> Common Geoms</a><ul>
+<li class="chapter" data-level="5" data-path="common-geoms.html"><a href="common-geoms.html"><i class="fa fa-check"></i><b>5</b> Common Geoms</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="common-geoms.html"><a href="common-geoms.html#about-this-chapter-2"><i class="fa fa-check"></i><b>5.1</b> About this chapter</a></li>
-<li class="chapter" data-level="5.2" data-path="common-geoms.html"><a href="common-geoms.html#continuous-geoms"><i class="fa fa-check"></i><b>5.2</b> Continuous geoms</a><ul>
+<li class="chapter" data-level="5.2" data-path="common-geoms.html"><a href="common-geoms.html#continuous-geoms"><i class="fa fa-check"></i><b>5.2</b> Continuous geoms</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="common-geoms.html"><a href="common-geoms.html#geom_smooth"><i class="fa fa-check"></i><b>5.2.1</b> geom_smooth()</a></li>
 <li class="chapter" data-level="5.2.2" data-path="common-geoms.html"><a href="common-geoms.html#whats-the-r2"><i class="fa fa-check"></i><b>5.2.2</b> What’s the r<sup>2</sup>?</a></li>
 <li class="chapter" data-level="5.2.3" data-path="common-geoms.html"><a href="common-geoms.html#geom_jitter"><i class="fa fa-check"></i><b>5.2.3</b> geom_jitter()</a></li>
 <li class="chapter" data-level="5.2.4" data-path="common-geoms.html"><a href="common-geoms.html#changing-opacity"><i class="fa fa-check"></i><b>5.2.4</b> Changing opacity</a></li>
 <li class="chapter" data-level="5.2.5" data-path="common-geoms.html"><a href="common-geoms.html#geom_histogram"><i class="fa fa-check"></i><b>5.2.5</b> geom_histogram()</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="common-geoms.html"><a href="common-geoms.html#discrete-geoms"><i class="fa fa-check"></i><b>5.3</b> Discrete geoms</a><ul>
+<li class="chapter" data-level="5.3" data-path="common-geoms.html"><a href="common-geoms.html#discrete-geoms"><i class="fa fa-check"></i><b>5.3</b> Discrete geoms</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="common-geoms.html"><a href="common-geoms.html#geom_point-and-geom_jitter"><i class="fa fa-check"></i><b>5.3.1</b> geom_point() and geom_jitter()</a></li>
 <li class="chapter" data-level="5.3.2" data-path="common-geoms.html"><a href="common-geoms.html#geom_boxplot-and-geom_violin"><i class="fa fa-check"></i><b>5.3.2</b> geom_boxplot() and geom_violin()</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="common-geoms.html"><a href="common-geoms.html#quiz-2"><i class="fa fa-check"></i><b>5.4</b> Quiz</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html"><i class="fa fa-check"></i><b>6</b> Using Factors to Subset Data and Plots</a><ul>
+<li class="chapter" data-level="6" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html"><i class="fa fa-check"></i><b>6</b> Using Factors to Subset Data and Plots</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html#about-this-chapter-3"><i class="fa fa-check"></i><b>6.1</b> About this chapter</a></li>
 <li class="chapter" data-level="6.2" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html#factors"><i class="fa fa-check"></i><b>6.2</b> Factors</a></li>
 <li class="chapter" data-level="6.3" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html#colouring-by-factors"><i class="fa fa-check"></i><b>6.3</b> Colouring by factors</a></li>
 <li class="chapter" data-level="6.4" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html#small-multiple-plots"><i class="fa fa-check"></i><b>6.4</b> Small multiple plots</a></li>
 <li class="chapter" data-level="6.5" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html#quiz-3"><i class="fa fa-check"></i><b>6.5</b> Quiz</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html"><i class="fa fa-check"></i><b>7</b> Using RMarkdown for Reproducible Publishable Plots</a><ul>
+<li class="chapter" data-level="7" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html"><i class="fa fa-check"></i><b>7</b> Using RMarkdown for Reproducible Publishable Plots</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html#about-this-chapter-4"><i class="fa fa-check"></i><b>7.1</b> About this chapter</a></li>
 <li class="chapter" data-level="7.2" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html#being-lazy-is-a-virtue.-work-hard-to-be-lazy."><i class="fa fa-check"></i><b>7.2</b> Being lazy is a virtue. Work hard to be lazy.</a></li>
-<li class="chapter" data-level="7.3" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html#r-markdown"><i class="fa fa-check"></i><b>7.3</b> R Markdown</a><ul>
+<li class="chapter" data-level="7.3" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html#r-markdown"><i class="fa fa-check"></i><b>7.3</b> R Markdown</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html#a-new-r-markdown-document"><i class="fa fa-check"></i><b>7.3.1</b> A new R Markdown document</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html#quiz-4"><i class="fa fa-check"></i><b>7.4</b> Quiz</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="visual-customisation.html"><a href="visual-customisation.html"><i class="fa fa-check"></i><b>8</b> Visual Customisation</a><ul>
+<li class="chapter" data-level="8" data-path="visual-customisation.html"><a href="visual-customisation.html"><i class="fa fa-check"></i><b>8</b> Visual Customisation</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="visual-customisation.html"><a href="visual-customisation.html#themes"><i class="fa fa-check"></i><b>8.1</b> Themes</a></li>
 <li class="chapter" data-level="8.2" data-path="visual-customisation.html"><a href="visual-customisation.html#quiz-5"><i class="fa fa-check"></i><b>8.2</b> Quiz</a></li>
 <li class="chapter" data-level="8.3" data-path="visual-customisation.html"><a href="visual-customisation.html#the-theme-function"><i class="fa fa-check"></i><b>8.3</b> The <code>theme()</code> function</a></li>
@@ -195,16 +219,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.5" data-path="visual-customisation.html"><a href="visual-customisation.html#changing-the-limits-of-a-continuous-scale"><i class="fa fa-check"></i><b>8.5</b> Changing the limits of a continuous scale</a></li>
 <li class="chapter" data-level="8.6" data-path="visual-customisation.html"><a href="visual-customisation.html#quiz-6"><i class="fa fa-check"></i><b>8.6</b> Quiz</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html"><i class="fa fa-check"></i><b>9</b> Loading your own data</a><ul>
+<li class="chapter" data-level="9" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html"><i class="fa fa-check"></i><b>9</b> Loading your own data</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#tidy-data"><i class="fa fa-check"></i><b>9.1</b> Tidy data</a></li>
 <li class="chapter" data-level="9.2" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#getting-your-data-into-tidy-format"><i class="fa fa-check"></i><b>9.2</b> Getting your data into tidy format</a></li>
-<li class="chapter" data-level="9.3" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#loading-in-a-csv-file"><i class="fa fa-check"></i><b>9.3</b> Loading in a CSV file</a><ul>
+<li class="chapter" data-level="9.3" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#loading-in-a-csv-file"><i class="fa fa-check"></i><b>9.3</b> Loading in a CSV file</a>
+<ul>
 <li class="chapter" data-level="9.3.1" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#read_csv"><i class="fa fa-check"></i><b>9.3.1</b> read_csv()</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#finding-the-file"><i class="fa fa-check"></i><b>9.4</b> Finding the file</a><ul>
+<li class="chapter" data-level="9.4" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#finding-the-file"><i class="fa fa-check"></i><b>9.4</b> Finding the file</a>
+<ul>
 <li class="chapter" data-level="9.4.1" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#make-it-easy-on-yourself"><i class="fa fa-check"></i><b>9.4.1</b> Make it easy on yourself</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#making-sure-the-data-types-are-correct"><i class="fa fa-check"></i><b>9.5</b> Making sure the data types are correct</a><ul>
+<li class="chapter" data-level="9.5" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#making-sure-the-data-types-are-correct"><i class="fa fa-check"></i><b>9.5</b> Making sure the data types are correct</a>
+<ul>
 <li class="chapter" data-level="9.5.1" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#parser-functions"><i class="fa fa-check"></i><b>9.5.1</b> Parser functions</a></li>
 </ul></li>
 <li class="chapter" data-level="9.6" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#quiz-7"><i class="fa fa-check"></i><b>9.6</b> Quiz</a></li>
@@ -226,7 +254,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="visual-customisation" class="section level1">
+<div id="visual-customisation" class="section level1" number="8">
 <h1><span class="header-section-number">Topic 8</span> Visual Customisation</h1>
 <ol style="list-style-type: decimal">
 <li>Questions:</li>
@@ -246,40 +274,40 @@ keypoints:</li>
 <li>The <code>theme()</code> function allows us to set individual theme elements</li>
 <li>The <code>scale</code> family of functions allows us to specify the scales</li>
 </ul>
-<div id="themes" class="section level2">
+<div id="themes" class="section level2" number="8.1">
 <h2><span class="header-section-number">8.1</span> Themes</h2>
 <p>At some point you’re going to want to custom/personalise or generally improve the look of your plots. So far we’ve concentrated on getting the data shown in the right place, now we’ll look at finessing the plot to make a final version. <code>ggplot2</code> and a companion package <code>ggthemes</code> have a wide variety of ready to go themes that can be applied and modified.</p>
 <p>Applying a built-in theme is very easy, we can think of the theme as a new layer to add. This code will give us a standard plot</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(iris) <span class="op">+</span><span class="st"> </span><span class="kw">aes</span>(Petal.Width,Petal.Length) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour=</span>Species)) </a>
-<a class="sourceLine" id="cb88-2" data-line-number="2">p</a></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="visual-customisation.html#cb89-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(iris) <span class="sc">+</span> <span class="fu">aes</span>(Petal.Width,Petal.Length) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour=</span>Species)) </span>
+<span id="cb89-2"><a href="visual-customisation.html#cb89-2" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div>
 <p><img src="07-themes_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>Let’s add a <code>theme_bw()</code> layer. Which is really a simple theme that takes away all colour you didn’t explicitly ask for - so the points stay coloured.</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(iris) <span class="op">+</span><span class="st"> </span><span class="kw">aes</span>(Petal.Width,Petal.Length) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour=</span>Species)) </a>
-<a class="sourceLine" id="cb89-2" data-line-number="2">p <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="visual-customisation.html#cb90-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(iris) <span class="sc">+</span> <span class="fu">aes</span>(Petal.Width,Petal.Length) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour=</span>Species)) </span>
+<span id="cb90-2"><a href="visual-customisation.html#cb90-2" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code></pre></div>
 <p><img src="07-themes_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 </div>
-<div id="quiz-5" class="section level2">
+<div id="quiz-5" class="section level2" number="8.2">
 <h2><span class="header-section-number">8.2</span> Quiz</h2>
 <ol style="list-style-type: decimal">
 <li><code>ggplot</code> itself only has a few themes built in. Try <code>theme_minimal()</code>, <code>theme_grey()</code> and <code>theme_dark()</code>.</li>
 <li>Use the docs at <a href="https://github.com/jrnold/ggthemes">https://github.com/jrnold/ggthemes</a> to examine the themes that are available in this external package. Try loading the package and using some of the themes. Don’t miss <code>theme_excel()</code>.</li>
 </ol>
 </div>
-<div id="the-theme-function" class="section level2">
+<div id="the-theme-function" class="section level2" number="8.3">
 <h2><span class="header-section-number">8.3</span> The <code>theme()</code> function</h2>
 <p>Changing the theme wholesale by applying a theme layer is great, but you’ll usually want to change individual theme elements. This is possible too, and is done using the <code>theme()</code> function.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(iris) <span class="op">+</span><span class="st"> </span><span class="kw">aes</span>(Petal.Width,Petal.Length) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour=</span>Species)) </a>
-<a class="sourceLine" id="cb90-2" data-line-number="2">p <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">family =</span> <span class="st">&quot;Times&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">size =</span> <span class="dv">14</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="visual-customisation.html#cb91-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(iris) <span class="sc">+</span> <span class="fu">aes</span>(Petal.Width,Petal.Length) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour=</span>Species)) </span>
+<span id="cb91-2"><a href="visual-customisation.html#cb91-2" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Times&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">size =</span> <span class="dv">14</span>))</span></code></pre></div>
 <p><img src="07-themes_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>So here we built a plot, applied a theme layer and then modified an element of that theme. The theme layer is really just a list of plot elements and their current settings. Conceptually it looks like this:</p>
 <pre><code> - line = element_line(colour=&quot;black&quot;, size=0.5),
  - text = element_text(family=&quot;Arial&quot;, colour=&quot;black&quot;, size=12)</code></pre>
 <p>With the thing on the left of the equals being the attribute of the plot e.g the <code>line</code> or the <code>text</code> and the thing on the right of the equals being the function that does the changing. Each plot element can be reset by using the proper function and setting the options for that function appropriately. Just like we did above!</p>
 <p>Some of the attributes apply across the whole plot, this one <code>text</code> applies to all text in the plot.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1">p <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">family =</span> <span class="st">&quot;Times&quot;</span>, <span class="dt">colour =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">size =</span> <span class="dv">14</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="visual-customisation.html#cb93-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">&quot;Times&quot;</span>, <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">size =</span> <span class="dv">14</span>))</span></code></pre></div>
 <p><img src="07-themes_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>But this one <code>axis.text.x</code> changes only the x axis text.</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1">p <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">colour=</span><span class="st">&quot;red&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="visual-customisation.html#cb94-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">colour=</span><span class="st">&quot;red&quot;</span>))</span></code></pre></div>
 <p><img src="07-themes_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>A full list of plot elements and the functions to set them are in <a href="http://docs.ggplot2.org/dev/vignettes/themes.html">http://docs.ggplot2.org/dev/vignettes/themes.html</a> and here are the most important ones. The options for each element function are in the ggplot2 docs <a href="http://docs.ggplot2.org/dev/element.html">http://docs.ggplot2.org/dev/element.html</a></p>
 <pre><code>
@@ -327,41 +355,41 @@ keypoints:</li>
 <li>Use the list above to find which element is the right one for legend text. Here it will be <code>legend.text</code></li>
 <li>Read off the element function for the <code>legend.text</code>, here it is <code>element_text()</code></li>
 <li>Use the ggplot2 docs to see the options for that element function: <a href="http://docs.ggplot2.org/dev/element.html">http://docs.ggplot2.org/dev/element.html</a></li>
-<li>Form the theme function: <code>theme( legend.text = element_text(size = 20, family=&quot;Helvetica&quot;, colour=&quot;green&quot;) )</code></li>
-<li>Add it to the plot <code>plot + theme( legend.text = element_text(size = 20, family=&quot;Helvetica&quot;, colour=&quot;green&quot;) )</code></li>
+<li>Form the theme function: <code>theme( legend.text = element_text(size = 20, family="Helvetica", colour="green") )</code></li>
+<li>Add it to the plot <code>plot + theme( legend.text = element_text(size = 20, family="Helvetica", colour="green") )</code></li>
 </ol>
 </div>
-<div id="changing-the-order-of-categories-in-the-plot" class="section level2">
+<div id="changing-the-order-of-categories-in-the-plot" class="section level2" number="8.4">
 <h2><span class="header-section-number">8.4</span> Changing the order of categories in the plot</h2>
 <p>The list of options above doesn’t provide anything we can use to specify the order in which the different categories are displayed. Instead this is done with a new type of function, the <code>scale</code> family of functions. By using the <code>scale_x_discrete()</code> function and options (especially the <code>limits</code>) we can set the way the scale on the axis is set. For a discrete (or categorical) variable this includes the order.</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(iris) <span class="op">+</span><span class="st"> </span><span class="kw">aes</span>(Species,Petal.Length) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() </a>
-<a class="sourceLine" id="cb95-2" data-line-number="2">p <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_discrete</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;virginica&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="visual-customisation.html#cb96-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(iris) <span class="sc">+</span> <span class="fu">aes</span>(Species,Petal.Length) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() </span>
+<span id="cb96-2"><a href="visual-customisation.html#cb96-2" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;virginica&quot;</span>))</span></code></pre></div>
 <p><img src="07-themes_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>You can change labels in the same way with the <code>labels</code> option,</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1">p <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_discrete</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;virginica&quot;</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;Ve&quot;</span>, <span class="st">&quot;Se&quot;</span>, <span class="st">&quot;Vi&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="visual-customisation.html#cb97-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="st">&quot;versicolor&quot;</span>, <span class="st">&quot;setosa&quot;</span>, <span class="st">&quot;virginica&quot;</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Ve&quot;</span>, <span class="st">&quot;Se&quot;</span>, <span class="st">&quot;Vi&quot;</span>))</span></code></pre></div>
 <p><img src="07-themes_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>You can reorder based on the value of some other value, e.g get the boxes ordered by the <code>Petal.Length</code> variable by squeezing in the <code>reorder()</code> function. Unusually, this is done in the <code>aes()</code> function in the aesthetic layer. We want to reorder the x-axis so we use the <code>reorder()</code> function on that. The syntax is <code>reorder(&lt;variable to reorder&gt;, &lt;variable to reorder by)</code>, so here we’re changing the order of the Species on the x-axis according to what is in <code>Petal.Length</code>.</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(iris) <span class="op">+</span><span class="st"> </span><span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">reorder</span>(Species, Petal.Length), <span class="dt">y=</span>Petal.Length ) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</a>
-<a class="sourceLine" id="cb97-2" data-line-number="2">p</a></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="visual-customisation.html#cb98-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(iris) <span class="sc">+</span> <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(Species, Petal.Length), <span class="at">y=</span>Petal.Length ) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span>
+<span id="cb98-2"><a href="visual-customisation.html#cb98-2" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div>
 <p><img src="07-themes_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <blockquote>
-<h2 id="text-formatting-in-plots"><span class="header-section-number">8.4</span> Text formatting in plots</h2>
+<h2 id="text-formatting-in-plots">Text formatting in plots</h2>
 <p>Biological notation is frustrating because it uses text formatting to express differences between things. So the wild-type allele is referred to in italics or underlined capitals whereas a mutant is referred to in italic or underlined lower case. Programming languages have a hard time with text formatting, so tend to deal with plain text. <code>ggplot</code> is no exception and there isn’t a way to make your labels italic. The best way to achieve this, therefore is to save the plot as a <code>.svg</code> file, then edit the labels manually in a graphics program like Inkscape.</p>
 </blockquote>
 </div>
-<div id="changing-the-limits-of-a-continuous-scale" class="section level2">
+<div id="changing-the-limits-of-a-continuous-scale" class="section level2" number="8.5">
 <h2><span class="header-section-number">8.5</span> Changing the limits of a continuous scale</h2>
 <p>The <code>scale_x_discrete()</code> function has analogous functions for the y-axis and for continuous axes - I.E. <code>scale_y_discrete()</code> and <code>scale_x_continuous()</code> and <code>scale_y_continuous()</code>. The most common thing to want to do with a continuous scale is set the limits, the start and end points.</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(iris) <span class="op">+</span><span class="st"> </span><span class="kw">aes</span>(Species, Petal.Length ) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</a>
-<a class="sourceLine" id="cb98-2" data-line-number="2">p <span class="op">+</span><span class="st"> </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">100</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="visual-customisation.html#cb99-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(iris) <span class="sc">+</span> <span class="fu">aes</span>(Species, Petal.Length ) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span>
+<span id="cb99-2"><a href="visual-customisation.html#cb99-2" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>))</span></code></pre></div>
 <p><img src="07-themes_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>It is also possible to change the scale to a logarithmic one with the <code>scale_y_log10()</code>, function, reverse it with <code>scale_y_reverse()</code> functions.</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1">p <span class="op">+</span><span class="st"> </span><span class="kw">scale_y_reverse</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="visual-customisation.html#cb100-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">scale_y_reverse</span>()</span></code></pre></div>
 <p><img src="07-themes_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1">p <span class="op">+</span><span class="st"> </span><span class="kw">scale_y_log10</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="visual-customisation.html#cb101-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">scale_y_log10</span>()</span></code></pre></div>
 <p><img src="07-themes_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
 </div>
-<div id="quiz-6" class="section level2">
+<div id="quiz-6" class="section level2" number="8.6">
 <h2><span class="header-section-number">8.6</span> Quiz</h2>
 <ol style="list-style-type: decimal">
 <li>Using the iris dataset, create a boxplot of Petal Width for each species</li>
@@ -388,11 +416,13 @@ Extra Credit: Set the values on the species axis to ‘Iris virginica’, ‘Iri
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -400,12 +430,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -417,6 +447,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },

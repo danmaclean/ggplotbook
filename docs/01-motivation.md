@@ -38,11 +38,10 @@ Step-by-step, here's how these figures are made.
 4. Draw plots comparing each sample
 5. Do an independent _t_-test on the sample 1 and sample 2 to test for significant differences in means.
 
-The figures are plotted with a red border if _p_ comes up less than 0.05. The thing is, the samples are from the same background pool, so intuitively you might suspect that none should be different from the others. The reason that some of them do is because a _p_ value only states that the difference observed occurs by chance in _p_ of all events, so for 100, we'd expect 5 to be marked out by chance. In this run of the experiment we get three. Here they are:
+The figures are plotted with a red border if _p_ comes up less than 0.05. The thing is, the samples are from the same background pool, so intuitively you might suspect that none should be different from the others. The reason that some of them do is because a _p_ value only states that the difference observed occurs by chance in _p_ of all events, so for 100, we'd expect 5 to be marked out by chance. In this run of the experiment we get three. Here's a couple:
 
 ![Run 28](fig/file_28.png)
 ![Run 66](fig/file_66.png)
-![Run 88](fig/file_88.png)
 
 Look at the different plots for each. It is observable that for all these the barplots look very convincingly different. But in the context with the other plots its clear that they aren't showing the whole of the story (or in fact much of it). The boxplots (top left) do a good job of showing the range and the violin and density plots (bottom row) do a good job of showing the shape. It is only really the point plot (first column, middle row) that reveals the positions of the data points and shows that the conclusion of the _p_ value is likely skewed by one or two points in each sample. Concluding differences on this basis is _really_ unsafe. 
 

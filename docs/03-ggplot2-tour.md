@@ -367,8 +367,8 @@ p + geom_point(aes(size=Species,colour=Species,shape=Species))
 2. Use this base plot `p <- ggplot(data=iris) + aes(x=Petal.Width, y=Petal.Length)`
 3. What happens if you map a continuous variable to an aesthetic like colour? EG `aes(color=Petal.Width)`
 4. Try combining `geom_smooth()` with `geom_jitter()`
-5. Why doesn't `geom_boxplot()` work? (Hint: you need to think about the difference between categorical or discrete and continuous data). 
-6. How could you make `geom_boxplot()` show you boxplots for the three species Petal.Width. (Hint: you need to think about the aesthetic and where you set it. 
+5. Why doesn't `geom_boxplot()` work with a continuous varialbe like Petal.Width? (Hint: you need to think about the difference between categorical or discrete and continuous data). 
+6. How could you make `geom_boxplot()` show you box plots for the three species Petal.Width. (Hint: you need to think about the aesthetic and where you set it. 
 
 
 
