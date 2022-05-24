@@ -1,358 +1,406 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
-<head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Using ggplot2 for producing plots</title>
-  <meta name="description" content="An introductory course for producing meaningful plots in R" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.387">
 
-  <meta property="og:title" content="Using ggplot2 for producing plots" />
-  <meta property="og:type" content="book" />
-  
-  
-  <meta property="og:description" content="An introductory course for producing meaningful plots in R" />
-  
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Using ggplot2 for producing plots" />
-  
-  <meta name="twitter:description" content="An introductory course for producing meaningful plots in R" />
-  
+<meta name="author" content="Dan MacLean">
+<meta name="dcterms.date" content="2022-05-01">
 
-<meta name="author" content="Dan MacLean" />
-
-
-<meta name="date" content="2021-07-05" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
-
-<link rel="next" href="motivation.html"/>
-<script src="libs/header-attrs-2.9/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-
-
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+<title>Using ggplot2 to produce meaningful plots</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
 </style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<link href="./03-ggplot2-tour.html" rel="next">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
 
 
 </head>
 
-<body>
+<body class="nav-sidebar floating">
 
-
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> ggplot2</a>
-<ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i><b>1.1</b> Prerequisites</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#installing-r"><i class="fa fa-check"></i><b>1.2</b> Installing R</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#installing-rstudio"><i class="fa fa-check"></i><b>1.3</b> Installing RStudio</a></li>
-<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#installing-r-packages-in-rstudio."><i class="fa fa-check"></i><b>1.4</b> Installing R packages in RStudio.</a>
-<ul>
-<li class="chapter" data-level="1.4.1" data-path="index.html"><a href="index.html#standard-packages"><i class="fa fa-check"></i><b>1.4.1</b> Standard packages</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="motivation.html"><a href="motivation.html"><i class="fa fa-check"></i><b>2</b> Motivation</a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="motivation.html"><a href="motivation.html#variability-in-measurements"><i class="fa fa-check"></i><b>2.1</b> Variability in measurements</a></li>
-<li class="chapter" data-level="2.2" data-path="motivation.html"><a href="motivation.html#summarising-your-data-can-lead-to-wrong-conclusions"><i class="fa fa-check"></i><b>2.2</b> Summarising your data can lead to wrong conclusions</a></li>
-<li class="chapter" data-level="2.3" data-path="motivation.html"><a href="motivation.html#p---one-value-to-fool-them-all"><i class="fa fa-check"></i><b>2.3</b> <em>p</em> - one value to fool them all?</a>
-<ul>
-<li class="chapter" data-level="2.3.1" data-path="motivation.html"><a href="motivation.html#ten-thousand-random-numbers"><i class="fa fa-check"></i><b>2.3.1</b> Ten Thousand Random Numbers</a></li>
-</ul></li>
-<li class="chapter" data-level="2.4" data-path="motivation.html"><a href="motivation.html#ggplot2-an-r-package-for-beautiful-visualisations"><i class="fa fa-check"></i><b>2.4</b> <em>ggplot2</em> An R package for beautiful visualisations</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="r-fundamentals.html"><a href="r-fundamentals.html"><i class="fa fa-check"></i><b>3</b> R Fundamentals</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="r-fundamentals.html"><a href="r-fundamentals.html#about-this-chapter"><i class="fa fa-check"></i><b>3.1</b> About this chapter</a></li>
-<li class="chapter" data-level="3.2" data-path="r-fundamentals.html"><a href="r-fundamentals.html#working-with-r"><i class="fa fa-check"></i><b>3.2</b> Working with R</a></li>
-<li class="chapter" data-level="3.3" data-path="r-fundamentals.html"><a href="r-fundamentals.html#variables"><i class="fa fa-check"></i><b>3.3</b> Variables</a>
-<ul>
-<li class="chapter" data-level="3.3.1" data-path="r-fundamentals.html"><a href="r-fundamentals.html#using-objects-and-functions"><i class="fa fa-check"></i><b>3.3.1</b> Using objects and functions</a></li>
-</ul></li>
-<li class="chapter" data-level="3.4" data-path="r-fundamentals.html"><a href="r-fundamentals.html#quiz"><i class="fa fa-check"></i><b>3.4</b> Quiz</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html"><i class="fa fa-check"></i><b>4</b> <em>ggplot2</em> Tour</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#about-this-chapter-1"><i class="fa fa-check"></i><b>4.1</b> About this chapter</a></li>
-<li class="chapter" data-level="4.2" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#building-a-plot-with-ggplot2"><i class="fa fa-check"></i><b>4.2</b> Building a plot with <em>ggplot2</em></a>
-<ul>
-<li class="chapter" data-level="4.2.1" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#loading-the-iris-test-data"><i class="fa fa-check"></i><b>4.2.1</b> Loading the iris test data</a></li>
-<li class="chapter" data-level="4.2.2" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#a-first-plot"><i class="fa fa-check"></i><b>4.2.2</b> A first plot</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#mappings-versus-assignment"><i class="fa fa-check"></i><b>4.3</b> Mappings versus assignment</a></li>
-<li class="chapter" data-level="4.4" data-path="ggplot2-tour.html"><a href="ggplot2-tour.html#quiz-1"><i class="fa fa-check"></i><b>4.4</b> Quiz</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="common-geoms.html"><a href="common-geoms.html"><i class="fa fa-check"></i><b>5</b> Common Geoms</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="common-geoms.html"><a href="common-geoms.html#about-this-chapter-2"><i class="fa fa-check"></i><b>5.1</b> About this chapter</a></li>
-<li class="chapter" data-level="5.2" data-path="common-geoms.html"><a href="common-geoms.html#continuous-geoms"><i class="fa fa-check"></i><b>5.2</b> Continuous geoms</a>
-<ul>
-<li class="chapter" data-level="5.2.1" data-path="common-geoms.html"><a href="common-geoms.html#geom_smooth"><i class="fa fa-check"></i><b>5.2.1</b> geom_smooth()</a></li>
-<li class="chapter" data-level="5.2.2" data-path="common-geoms.html"><a href="common-geoms.html#whats-the-r2"><i class="fa fa-check"></i><b>5.2.2</b> What’s the r<sup>2</sup>?</a></li>
-<li class="chapter" data-level="5.2.3" data-path="common-geoms.html"><a href="common-geoms.html#geom_jitter"><i class="fa fa-check"></i><b>5.2.3</b> geom_jitter()</a></li>
-<li class="chapter" data-level="5.2.4" data-path="common-geoms.html"><a href="common-geoms.html#changing-opacity"><i class="fa fa-check"></i><b>5.2.4</b> Changing opacity</a></li>
-<li class="chapter" data-level="5.2.5" data-path="common-geoms.html"><a href="common-geoms.html#geom_histogram"><i class="fa fa-check"></i><b>5.2.5</b> geom_histogram()</a></li>
-</ul></li>
-<li class="chapter" data-level="5.3" data-path="common-geoms.html"><a href="common-geoms.html#discrete-geoms"><i class="fa fa-check"></i><b>5.3</b> Discrete geoms</a>
-<ul>
-<li class="chapter" data-level="5.3.1" data-path="common-geoms.html"><a href="common-geoms.html#geom_point-and-geom_jitter"><i class="fa fa-check"></i><b>5.3.1</b> geom_point() and geom_jitter()</a></li>
-<li class="chapter" data-level="5.3.2" data-path="common-geoms.html"><a href="common-geoms.html#geom_boxplot-and-geom_violin"><i class="fa fa-check"></i><b>5.3.2</b> geom_boxplot() and geom_violin()</a></li>
-</ul></li>
-<li class="chapter" data-level="5.4" data-path="common-geoms.html"><a href="common-geoms.html#quiz-2"><i class="fa fa-check"></i><b>5.4</b> Quiz</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html"><i class="fa fa-check"></i><b>6</b> Using Factors to Subset Data and Plots</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html#about-this-chapter-3"><i class="fa fa-check"></i><b>6.1</b> About this chapter</a></li>
-<li class="chapter" data-level="6.2" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html#factors"><i class="fa fa-check"></i><b>6.2</b> Factors</a></li>
-<li class="chapter" data-level="6.3" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html#colouring-by-factors"><i class="fa fa-check"></i><b>6.3</b> Colouring by factors</a></li>
-<li class="chapter" data-level="6.4" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html#small-multiple-plots"><i class="fa fa-check"></i><b>6.4</b> Small multiple plots</a></li>
-<li class="chapter" data-level="6.5" data-path="using-factors-to-subset-data-and-plots.html"><a href="using-factors-to-subset-data-and-plots.html#quiz-3"><i class="fa fa-check"></i><b>6.5</b> Quiz</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html"><i class="fa fa-check"></i><b>7</b> Using RMarkdown for Reproducible Publishable Plots</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html#about-this-chapter-4"><i class="fa fa-check"></i><b>7.1</b> About this chapter</a></li>
-<li class="chapter" data-level="7.2" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html#being-lazy-is-a-virtue.-work-hard-to-be-lazy."><i class="fa fa-check"></i><b>7.2</b> Being lazy is a virtue. Work hard to be lazy.</a></li>
-<li class="chapter" data-level="7.3" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html#r-markdown"><i class="fa fa-check"></i><b>7.3</b> R Markdown</a>
-<ul>
-<li class="chapter" data-level="7.3.1" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html#a-new-r-markdown-document"><i class="fa fa-check"></i><b>7.3.1</b> A new R Markdown document</a></li>
-</ul></li>
-<li class="chapter" data-level="7.4" data-path="using-rmarkdown-for-reproducible-publishable-plots.html"><a href="using-rmarkdown-for-reproducible-publishable-plots.html#quiz-4"><i class="fa fa-check"></i><b>7.4</b> Quiz</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="visual-customisation.html"><a href="visual-customisation.html"><i class="fa fa-check"></i><b>8</b> Visual Customisation</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="visual-customisation.html"><a href="visual-customisation.html#themes"><i class="fa fa-check"></i><b>8.1</b> Themes</a></li>
-<li class="chapter" data-level="8.2" data-path="visual-customisation.html"><a href="visual-customisation.html#quiz-5"><i class="fa fa-check"></i><b>8.2</b> Quiz</a></li>
-<li class="chapter" data-level="8.3" data-path="visual-customisation.html"><a href="visual-customisation.html#the-theme-function"><i class="fa fa-check"></i><b>8.3</b> The <code>theme()</code> function</a></li>
-<li class="chapter" data-level="8.4" data-path="visual-customisation.html"><a href="visual-customisation.html#changing-the-order-of-categories-in-the-plot"><i class="fa fa-check"></i><b>8.4</b> Changing the order of categories in the plot</a></li>
-<li class="chapter" data-level="8.5" data-path="visual-customisation.html"><a href="visual-customisation.html#changing-the-limits-of-a-continuous-scale"><i class="fa fa-check"></i><b>8.5</b> Changing the limits of a continuous scale</a></li>
-<li class="chapter" data-level="8.6" data-path="visual-customisation.html"><a href="visual-customisation.html#quiz-6"><i class="fa fa-check"></i><b>8.6</b> Quiz</a></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html"><i class="fa fa-check"></i><b>9</b> Loading your own data</a>
-<ul>
-<li class="chapter" data-level="9.1" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#tidy-data"><i class="fa fa-check"></i><b>9.1</b> Tidy data</a></li>
-<li class="chapter" data-level="9.2" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#getting-your-data-into-tidy-format"><i class="fa fa-check"></i><b>9.2</b> Getting your data into tidy format</a></li>
-<li class="chapter" data-level="9.3" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#loading-in-a-csv-file"><i class="fa fa-check"></i><b>9.3</b> Loading in a CSV file</a>
-<ul>
-<li class="chapter" data-level="9.3.1" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#read_csv"><i class="fa fa-check"></i><b>9.3.1</b> read_csv()</a></li>
-</ul></li>
-<li class="chapter" data-level="9.4" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#finding-the-file"><i class="fa fa-check"></i><b>9.4</b> Finding the file</a>
-<ul>
-<li class="chapter" data-level="9.4.1" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#make-it-easy-on-yourself"><i class="fa fa-check"></i><b>9.4.1</b> Make it easy on yourself</a></li>
-</ul></li>
-<li class="chapter" data-level="9.5" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#making-sure-the-data-types-are-correct"><i class="fa fa-check"></i><b>9.5</b> Making sure the data types are correct</a>
-<ul>
-<li class="chapter" data-level="9.5.1" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#parser-functions"><i class="fa fa-check"></i><b>9.5.1</b> Parser functions</a></li>
-</ul></li>
-<li class="chapter" data-level="9.6" data-path="loading-your-own-data.html"><a href="loading-your-own-data.html#quiz-7"><i class="fa fa-check"></i><b>9.6</b> Quiz</a></li>
-</ul></li>
-</ul>
-
-      </nav>
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Using ggplot2 to produce meaningful plots</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
     </div>
-
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Using ggplot2 for producing plots</a>
-          </h1>
-        </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Using ggplot2 for producing plots</h1>
-<p class="author"><em>Dan MacLean</em></p>
-<p class="date" style="margin-top: 1.5em;"><em>2021-07-05</em></p>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Using ggplot2 to produce meaningful plots</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Using-ggplot2-to-produce-meaningful-plots-.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+    <a href="" title="Share" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+            <i class="bi bi-bi-twitter pe-1"></i>
+          Twitter
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+    </ul>
 </div>
-<div id="ggplot2" class="section level1" number="1">
-<h1><span class="header-section-number">Topic 1</span> ggplot2</h1>
-<p>The primary purpose of this handbook is to show you how to create clear and informative plots in the R package <em>ggplot2</em>. We will look at how <em>ggplot2</em> is structured, how to prepare datasets for use in <em>ggplot2</em> and how to customise plots. We will develop plots in R Markdown documents to aid reproducibility and re-use of plots.</p>
-<div id="prerequisites" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Prerequisites</h2>
-<p>No specific knowledge prerequisites for this book but it will help if you are familiar with some common statistical tests, <code>t</code>, <code>ANOVA</code> and regression for the later parts.
-You will also find a knowledge of how to write computer file paths helpful.</p>
-<p>You need to install the following stuff for this book:</p>
-<ol style="list-style-type: decimal">
-<li>R</li>
-<li>RStudio</li>
-<li>An R package: <em>ggplot2</em></li>
-<li>You will need to download these files and save them to somewhere on your computer:
-<a href="files/diamonds.csv">diamonds.csv</a> and <a href="files/example_ros_data_flg22.xlsx">example_ros_data_flg22.xlsx</a>,</li>
-</ol>
-</div>
-<div id="installing-r" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> Installing R</h2>
-<p>Follow this link and install the right version for your operating system <a href="https://www.stats.bris.ac.uk/R/">https://www.stats.bris.ac.uk/R/</a></p>
-</div>
-<div id="installing-rstudio" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Installing RStudio</h2>
-<p>Follow this link and install the right version for your operating system <a href="https://www.rstudio.com/products/rstudio/download/">https://www.rstudio.com/products/rstudio/download/</a></p>
-</div>
-<div id="installing-r-packages-in-rstudio." class="section level2" number="1.4">
-<h2><span class="header-section-number">1.4</span> Installing R packages in RStudio.</h2>
-<div id="standard-packages" class="section level3" number="1.4.1">
-<h3><span class="header-section-number">1.4.1</span> Standard packages</h3>
-<p>Start RStudio and use the <code>Packages</code> tab in lower right panel. Click the install button (top left of the panel) and enter the package name, then click install as in this picture</p>
-<div class="figure">
-<img src="fig/package_install.png" alt="" />
-<p class="caption">Installing Packages</p>
-</div>
-
-</div>
-</div>
-</div>
-            </section>
-
-          </div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
         </div>
       </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link active">Motivation</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">ggplot2 fundamentals</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-ggplot2-tour.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><em>ggplot2</em> Tour</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Making a data appropriate plot</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-geoms.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Common Geoms</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-factors_facets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Using Factors to Subset Data and Plots</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-themes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Visual Customisation</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Working reproducibly</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-rmarkdown.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">RMarkdown for Reproducible Publishable Plots</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-data-loading.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Loading your own data</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Appendices</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link">Prerequisites</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r-fundamentals.html" class="sidebar-item-text sidebar-link">R Fundamentals</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./acknowledgements.html" class="sidebar-item-text sidebar-link">Acknowledgements</a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation">Motivation</a>
+  <ul class="collapse">
+  <li><a href="#variability-in-measurements" id="toc-variability-in-measurements" class="nav-link" data-scroll-target="#variability-in-measurements">Variability in measurements</a></li>
+  <li><a href="#summarising-your-data-can-lead-to-wrong-conclusions" id="toc-summarising-your-data-can-lead-to-wrong-conclusions" class="nav-link" data-scroll-target="#summarising-your-data-can-lead-to-wrong-conclusions">Summarising your data can lead to wrong conclusions</a></li>
+  <li><a href="#p---one-value-to-fool-them-all" id="toc-p---one-value-to-fool-them-all" class="nav-link" data-scroll-target="#p---one-value-to-fool-them-all"><em>p</em> - one value to fool them all?</a>
+  <ul class="collapse">
+  <li><a href="#ten-thousand-random-numbers" id="toc-ten-thousand-random-numbers" class="nav-link" data-scroll-target="#ten-thousand-random-numbers">Ten Thousand Random Numbers</a></li>
+  </ul></li>
+  <li><a href="#ggplot2-an-r-package-for-beautiful-visualisations" id="toc-ggplot2-an-r-package-for-beautiful-visualisations" class="nav-link" data-scroll-target="#ggplot2-an-r-package-for-beautiful-visualisations"><em>ggplot2</em> An R package for beautiful visualisations</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
 
-<a href="motivation.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Using ggplot2 to produce meaningful plots</h1>
+</div>
+
+
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Dan MacLean </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 1, 2022</p>
     </div>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"toc": {
-"collapse": "subsection"
-}
-});
+    
+  </div>
+  
+
+</header>
+
+<section id="motivation" class="level1 unnumbered">
+<h1 class="unnumbered">Motivation</h1>
+<section id="variability-in-measurements" class="level2">
+<h2 class="anchored" data-anchor-id="variability-in-measurements">Variability in measurements</h2>
+<p>Variability in measurements is a thing that happens as a natural consequence of working with complex systems that are affected by many variables in stochastic ways. Biological systems are some of the most variable we know. The variability in our experiments could be a function of the behaviour of the system yet it is common practice to hide that variability when we start to analyse our data by using summary plots like box-plots. Ultimately, that’s bad news for our science, because the variability could be telling us something.</p>
+</section>
+<section id="summarising-your-data-can-lead-to-wrong-conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="summarising-your-data-can-lead-to-wrong-conclusions">Summarising your data can lead to wrong conclusions</h2>
+<p>We all know that when you create a bar chart and put some error bars on it, you’re really only representing two numbers, usually a mean and standard deviation. People create bar plots instinctively, and in doing so can miss important stuff. Look at this figure:</p>
+<p><img src="fig/barplots.png" class="img-fluid" alt="Weissgerber et al"> <em>source:</em> <a href="http://journals.plos.org/plosbiology/article/figure/image?size=large&amp;id=info:doi/10.1371/journal.pbio.1002128.g001">Weissgerber et al</a></p>
+<p>The bar chart in panel A is one that came out of all those sets of numbers in the other panels. But it really hides some important stuff, like the fact the numbers are clearly separating into two groups in panel D, or that the two samples have different sizes in panel E.</p>
+<p>Worse than any of these is that the significant difference in the t-test is coming from just one point in panel C. From this data set you might be tempted to conclude that there is a significant difference in the two samples and if you relied on the bar chart as a visualisation then you’d never suspect there was something funny.</p>
+<p>Some enthusiastic young science communicators have even started a Kickstarter to lobby journals to stop using, in particular, bar charts! These people, calling themselves Bar Barplots, have a nice video on one of the main problems with bar charts. Have a look at this page on Kickstarter . <a href="https://www.kickstarter.com/projects/1474588473/barbarplots">Kickstarter - Barbarplots</a>, especially this video <a href="https://ksr-video.imgix.net/projects/2453455/video-665338-h264_high.mp4">Kickstarter - Barbarplots video</a>.</p>
+<p>Ignoring your data visualisation and just making bar plots could be an error! It’s important that you spend a little time getting to know, and presenting your data as clearly and thoroughly as possible.</p>
+</section>
+<section id="p---one-value-to-fool-them-all" class="level2">
+<h2 class="anchored" data-anchor-id="p---one-value-to-fool-them-all"><em>p</em> - one value to fool them all?</h2>
+<p>But why would you care about this, in the end a <em>p</em>-value won’t a <em>p</em>-value help you see real differences and make this all easy? Sadly, that isn’t true. Let’s do an experiment to test that.</p>
+<section id="ten-thousand-random-numbers" class="level3">
+<h3 class="anchored" data-anchor-id="ten-thousand-random-numbers">Ten Thousand Random Numbers</h3>
+<p>Below is a set of figures that show different views of the same set of data. Every frame of the 100 frames shows a different sampling from the same pool of 10,000 random normally distributed numbers.</p>
+<div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig/animation.gif" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">Random Sample Plots</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p>Step-by-step, here’s how these figures are made.</p>
+<ol type="1">
+<li>Generate a pool of 10,000 random numbers (mean 5, sd 1)</li>
+<li>From that, select 10 and call it sample 1.</li>
+<li>Select another 10, call it sample 2.</li>
+<li>Draw plots comparing each sample</li>
+<li>Do an independent <em>t</em>-test on the sample 1 and sample 2 to test for significant differences in means.</li>
+</ol>
+<p>The figures are plotted with a red border if <em>p</em> comes up less than 0.05. The thing is, the samples are from the same background pool, so intuitively you might suspect that none should be different from the others. The reason that some of them do is because a <em>p</em> value only states that the difference observed occurs by chance in <em>p</em> of all events, so for 100, we’d expect 5 to be marked out by chance. In this run of the experiment we get three. Here’s a couple:</p>
+<p><img src="fig/file_28.png" class="img-fluid" alt="Run 28"> <img src="fig/file_66.png" class="img-fluid" alt="Run 66"></p>
+<p>Look at the different plots for each. It is observable that for all these the barplots look very convincingly different. But in the context with the other plots its clear that they aren’t showing the whole of the story (or in fact much of it). The boxplots (top left) do a good job of showing the range and the violin and density plots (bottom row) do a good job of showing the shape. It is only really the point plot (first column, middle row) that reveals the positions of the data points and shows that the conclusion of the <em>p</em> value is likely skewed by one or two points in each sample. Concluding differences on this basis is <em>really</em> unsafe.</p>
+<p>Hence, the conclusion from this is that a range of visualisations is necessary to allow us to have confidence in our <em>p</em> values and understand the shapes of our data. Drawing box plots and sticking to <em>p</em> religiously is going to make us wrong more than we’d like!</p>
+</section>
+</section>
+<section id="ggplot2-an-r-package-for-beautiful-visualisations" class="level2">
+<h2 class="anchored" data-anchor-id="ggplot2-an-r-package-for-beautiful-visualisations"><em>ggplot2</em> An R package for beautiful visualisations</h2>
+<p>In this tutorial we are going to use <em>ggplot2</em> a package in R to make some clear, informative, thorough visualisations that will help us with our analysis. Here’s an example of the sort of thing you can get from <em>ggplot</em>:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fig/sepal-vs-petal-specied.png" class="img-fluid figure-img"></p>
+<p></p><figcaption aria-hidden="true" class="figure-caption">ggplot 2 iris data</figcaption><p></p>
+</figure>
+</div>
+<p><em>ggplot2</em> is a library in the R statistical programming language - but we won’t be learning to program here. The <em>gg</em> part stands for ‘grammar of graphics’, and <em>ggplot2</em> is a small grammar that describes plots that should be built on top of data - effectively allowing a user to write their own plot description and have the computer work out what to do, so no programming is needed, just an appreciation of the grammar that is used to describe the plot.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./03-ggplot2-tour.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><em>ggplot2</em> Tour</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
 
-</body>
 
-</html>
+
+</body></html>

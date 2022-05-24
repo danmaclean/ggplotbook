@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.387">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Using ggplot2 to produce meaningful plots - 6&nbsp; Loading your own data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<link href="./prerequisites.html" rel="next">
+<link href="./06-rmarkdown.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Loading your own data</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Using ggplot2 to produce meaningful plots</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Using-ggplot2-to-produce-meaningful-plots-.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+    <a href="" title="Share" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+            <i class="bi bi-bi-twitter pe-1"></i>
+          Twitter
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+    </ul>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Motivation</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">ggplot2 fundamentals</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-ggplot2-tour.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title"><em>ggplot2</em> Tour</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Making a data appropriate plot</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-geoms.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Common Geoms</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-factors_facets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Using Factors to Subset Data and Plots</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-themes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Visual Customisation</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Working reproducibly</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-rmarkdown.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">RMarkdown for Reproducible Publishable Plots</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-data-loading.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Loading your own data</span></a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Appendices</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./prerequisites.html" class="sidebar-item-text sidebar-link">Prerequisites</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r-fundamentals.html" class="sidebar-item-text sidebar-link">R Fundamentals</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./acknowledgements.html" class="sidebar-item-text sidebar-link">Acknowledgements</a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#tidy-data" id="toc-tidy-data" class="nav-link active" data-scroll-target="#tidy-data"> <span class="header-section-number">6.1</span> Tidy data</a></li>
+  <li><a href="#getting-your-data-into-tidy-format" id="toc-getting-your-data-into-tidy-format" class="nav-link" data-scroll-target="#getting-your-data-into-tidy-format"> <span class="header-section-number">6.2</span> Getting your data into tidy format</a></li>
+  <li><a href="#loading-in-a-csv-file" id="toc-loading-in-a-csv-file" class="nav-link" data-scroll-target="#loading-in-a-csv-file"> <span class="header-section-number">6.3</span> Loading in a CSV file</a>
+  <ul class="collapse">
+  <li><a href="#read_csv" id="toc-read_csv" class="nav-link" data-scroll-target="#read_csv"> <span class="header-section-number">6.3.1</span> read_csv()</a></li>
+  </ul></li>
+  <li><a href="#finding-the-file" id="toc-finding-the-file" class="nav-link" data-scroll-target="#finding-the-file"> <span class="header-section-number">6.4</span> Finding the file</a>
+  <ul class="collapse">
+  <li><a href="#make-it-easy-on-yourself" id="toc-make-it-easy-on-yourself" class="nav-link" data-scroll-target="#make-it-easy-on-yourself"> <span class="header-section-number">6.4.1</span> Make it easy on yourself</a></li>
+  </ul></li>
+  <li><a href="#making-sure-the-data-types-are-correct" id="toc-making-sure-the-data-types-are-correct" class="nav-link" data-scroll-target="#making-sure-the-data-types-are-correct"> <span class="header-section-number">6.5</span> Making sure the data types are correct</a>
+  <ul class="collapse">
+  <li><a href="#parser-functions" id="toc-parser-functions" class="nav-link" data-scroll-target="#parser-functions"> <span class="header-section-number">6.5.1</span> Parser functions</a></li>
+  </ul></li>
+  <li><a href="#quiz" id="toc-quiz" class="nav-link" data-scroll-target="#quiz"> <span class="header-section-number">6.6</span> Quiz</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Loading your own data</span></h1>
+</div>
+
+
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<ol type="1">
+<li>Questions:</li>
+</ol>
+<ul>
+<li>How do I use <em>my</em> data?</li>
+</ul>
+<ol start="2" type="1">
+<li>Objectives:</li>
+</ol>
+<ul>
+<li>Preparing a csv file in ‘tidy’ format</li>
+<li>Understanding file system paths</li>
+<li>Loading a file to a dataframe</li>
+<li>Explicitly describing the file contents</li>
+</ul>
+<ol start="3" type="1">
+<li>Keypoints:</li>
+</ol>
+<ul>
+<li>Data needs to be in a particular format for <code>ggplot</code> to work</li>
+<li>Specifying the data type is sometimes necessary when creating a data frame.</li>
+</ul>
+<section id="tidy-data" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="tidy-data"><span class="header-section-number">6.1</span> Tidy data</h2>
+<p>There are many ways to structure data. Here are two quite common ones.</p>
+
+<table>
+<tbody><tr><th>
+</th>
+<th>
+treatmenta
+</th>
+<th>
+treatmentb
+</th>
+</tr><tr>
+<td>
+John Smith
+</td>
+<td>
+11
+</td>
+<td>
+2
+</td>
+</tr>
+<tr>
+<td>
+Jane Doe
+</td>
+<td>
+16
+</td>
+<td>
+11
+</td>
+</tr>
+<tr>
+<td>
+Mary Johnson
+</td>
+<td>
+3
+</td>
+<td>
+1
+</td>
+</tr>
+
+</tbody></table>
+<table>
+<tbody><tr><th>
+</th>
+<th>
+John Smith
+</th>
+<th>
+Jane Doe
+</th>
+<th>
+Mary Johnson
+</th>
+</tr><tr>
+<td>
+treatementa
+</td>
+<td>
+11
+</td>
+<td>
+16
+</td>
+<td>
+3
+</td>
+</tr>
+<tr>
+<td>
+treatementb
+</td>
+<td>
+2
+</td>
+<td>
+11
+</td>
+<td>
+1
+</td>
+</tr>
+
+</tbody></table>
+<p><em>source:</em> <a href="http://vita.had.co.nz/papers/tidy-data.pdf">Hadley Wickham</a></p>
+<p>Tables contain two things, variables and values for those variables. In these two tables there are only three variables. <code>treatment</code> is one, with the values <code>a</code> and <code>b</code> . The second is ‘name’, with three values hidden in plain sight, and the third is <code>result</code> which is the value of the thing actually measured for each person and treatment.</p>
+<p>For human reading purposes, we don’t need to state the variables explicitly, we can see them by interpolating between the columns and rows and adding a bit of common sense. This mixing up of variables and values across tables like this has led some to call these tables ‘messy’. A computer finds it hard to make sense of a messy table.</p>
+<p>Working with R is made much less difficult if we get the data into a ‘tidy’ format. This format is distinct because each variable has its own column explicitly, like this</p>
+
+<table>
+<tbody><tr><th>
+name
+</th>
+<th>
+treatment
+</th>
+<th>
+result
+</th>
+</tr><tr>
+<td>
+John Smith
+</td>
+<td>
+a
+</td>
+<td>
+11
+</td>
+</tr>
+<tr>
+<td>
+Jane Doe
+</td>
+<td>
+a
+</td>
+<td>
+16
+</td>
+</tr>
+<tr>
+<td>
+Mary Johnson
+</td>
+<td>
+a
+</td>
+<td>
+3
+</td>
+</tr>
+<tr>
+<td>
+John Smith
+</td>
+<td>
+b
+</td>
+<td>
+2
+</td>
+</tr>
+<tr>
+<td>
+Jane Doe
+</td>
+<td>
+b
+</td>
+<td>
+11
+</td>
+</tr>
+<tr>
+<td>
+Mary Johnson
+</td>
+<td>
+b
+</td>
+<td>
+1
+</td>
+</tr>
+
+</tbody></table>
+<p>Now each variable has a column, and each seperate observation of the data has its own row. It is <em>much</em> more verbose for a human, but R can use this easily because we are now explicit about what is called what and how it relates to everything else.</p>
+</section>
+<section id="getting-your-data-into-tidy-format" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="getting-your-data-into-tidy-format"><span class="header-section-number">6.2</span> Getting your data into tidy format</h2>
+<p>The bad news here is that there is no magic function to make your data tidy. If you have an existing table then you can do this manually in Excel or some other spreadsheet package. If you have lots of data, it is possible to do it programmatically in R, see the <code>dplyr</code> and <code>tidyr</code> packages, which are complex but designed for this purpose. Also have a look at the cheat-sheet here <a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf</a>.</p>
+</section>
+<section id="loading-in-a-csv-file" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="loading-in-a-csv-file"><span class="header-section-number">6.3</span> Loading in a CSV file</h2>
+<p>R can deal with a lot of file formats, but the most common and easily used one is ‘csv’, a comma-separated value file. These can be exported from virtually any spreadsheet program so it’s a good interchange format to get data into R from wherever you already have it. Loading a file is done easily with the <code>readr</code> package`.</p>
+<p><code>readr</code> is a tool for loading data into R. It can be loaded on its own with <code>library(readr)</code>. We will use <code>readr</code> to load in data from a ‘flat’ <code>.csv</code> file.</p>
+<section id="read_csv" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="read_csv"><span class="header-section-number">6.3.1</span> read_csv()</h3>
+<p>The main function is <code>read_csv()</code> which can read a standard comma seperated values file from disk into an R dataframe. There are a few variants of <code>read_csv()</code> which may be appropriate for different sorts of <code>.csv</code> file, but they all work the same.</p>
+<ul>
+<li><code>read_csv2()</code> - reads semi-colon delimited files, which are commonly used where a comma is used as a decimal separator</li>
+<li><code>read_tsv()</code> - reads tab delimited files</li>
+<li><code>read_delim()</code> - reads files delimited by an arbitrary character</li>
+</ul>
+<p>The first argument to <code>read_csv()</code> is the path to the file to read. Here I’ll read a file on my Desktop that contains the diamonds data we’ve been using.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"~/Desktop/diamonds.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This will create an object called a dataframe that can be used just like the built-in data.</p>
+</section>
+</section>
+<section id="finding-the-file" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="finding-the-file"><span class="header-section-number">6.4</span> Finding the file</h2>
+<p>R needs to be given the correct and full path to a file. This means the full address of the file on the hard disk of your computer. R doesn’t have a file chooser so you need to know how to write this down.</p>
+<p>Computer file systems are laid out in folders and sub-folders with files inside them. Conceptually, this results in a tree of folders and a path down the branches from the root of the tree to everything else. The root gets called ‘/’ on Mac/Linux computers and ’C:' on Windows computers</p>
+<p><img src="fig/home-directories.png" class="img-fluid" alt="FileSystem"> <em>source:</em> <a href="http://swcarpentry.github.io/shell-novice/fig/home-directories.svg">Software Carpentry</a></p>
+<p>This picture of an example file system shows how that is formed. When we write this down, everytime we go inside a new folder we use a slash to show we’ve changed folder. Most computer systems have a ‘Users’ or similar folder in which each users stuff is stored. Supposing we’re in Larry’s folder then the path would be <code>/Users/larry</code>. And a file called <code>my_file.txt</code> in that folder would be <code>/Users/larry/my_file.txt</code>.</p>
+<p>So to write the full file path for R we can use this pattern, the first bit would be <code>/Users/username/</code> (or <code>C:\Documents and Settings\username\</code> or <code>C:\Users\username\</code>) and then the set of folders within that user area follows on. If your file <code>my_file.txt</code> is on the Desktop the full path would be <code>/Users/username/Desktop/my_file.txt</code> (or <code>C:/Documents and Settings/username/Desktop/my_file.txt</code>)</p>
+<section id="make-it-easy-on-yourself" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="make-it-easy-on-yourself"><span class="header-section-number">6.4.1</span> Make it easy on yourself</h3>
+<p>The easiest way not to have to think too hard about this stuff is to set up a consistent folder and file structure for every analysis and use RMarkdown documents to run your analysis. Here’s an example scheme:</p>
+<ol type="1">
+<li>Create a new folder and call it something relevant to your experiment, e.g <code>disease_incidence_2019-11-01</code></li>
+<li>Within the folder create a sub-folder called <code>raw</code> and a sub-folder called <code>output_images</code>.</li>
+<li>Put your tidy csv file in the <code>raw</code> folder.</li>
+<li>Create a new R Markdown document and save it in the <code>disease_incidence_2019-11-01</code> folder.</li>
+</ol>
+<p>Now whenever you open and run that R Markdown document, the path of your input file is <code>"raw/my_input_filename.csv"</code>. You can save your plots with the <code>ggsave()</code> function to <code>"output_images/filename.png"</code> (don’t forget the quotes).</p>
+<p>If you never mess around with the relative positions of the files and folders described, then the paths will always be the same. You can move the whole folder without worrying, just don’t jumble it’s contents.</p>
+</section>
+</section>
+<section id="making-sure-the-data-types-are-correct" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="making-sure-the-data-types-are-correct"><span class="header-section-number">6.5</span> Making sure the data types are correct</h2>
+<p>When we load new data we need to make sure that any header has been properly parsed as column names, and that the columns have been identified as the right sort of data</p>
+<p>On loading with <code>readr</code> we see a column specification, <code>read_csv()</code> has guessed at what the columns should be and made those types. Its fine for the most part, but some of those columns we’d prefer to be factors. We can set our own column specification to force the column types on loading. We only have to do the ones that <code>read_csv()</code> gets wrong. Specifically, lets fix <code>cut</code> and <code>color</code> to a <code>factor</code>. We can do that with the <code>col_types</code> argument.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"~/Desktop/diamonds.csv"</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">cut =</span> <span class="fu">col_factor</span>(<span class="cn">NULL</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="fu">col_factor</span>(<span class="cn">NULL</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="parser-functions" class="level3" data-number="6.5.1">
+<h3 data-number="6.5.1" class="anchored" data-anchor-id="parser-functions"><span class="header-section-number">6.5.1</span> Parser functions</h3>
+<p>This works by assigning a parser function that returns a specific type to each column, here it’s <code>col_factor()</code>. There are parser functions for all types of data, and all of them can be used if <code>read_csv()</code> doesn’t guess your data properly. We won’t go into detail of all of them, just remember that if your numbers or dates or stuff won’t load properly, there’s a parser function that can help.</p>
+<p>Once the specification shows what you expect, then you are good to start analysing.</p>
+</section>
+</section>
+<section id="quiz" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="quiz"><span class="header-section-number">6.6</span> Quiz</h2>
+<pre><code>1. Make a new folder called `analysis` on the Desktop
+2. Inside `analysis` make a new folder called `raw` and put `example_ros_data_flg22.xlsx` into it.
+3. Start a new R Markdown document and save it in `analysis`</code></pre>
+<ol start="2" type="1">
+<li>Convert <code>raw/example_ros_data_flg22.xlsx</code> into a ‘tidy’ format .csv file and save to <code>raw</code></li>
+<li>Load in the data from the tidy file using <code>read.csv()</code> (Hint: You may need to save a csv version from Excel - R won’t read .xlsx files.)</li>
+<li>Check the datatypes and headers using <code>str()</code>, change them if necessary.</li>
+<li>Create a plot that shows each data point in each treatment (Col, pp2c38, pp2c48 pp2c38/pp2c48) in each day the experiment was done.</li>
+<li>Make sure the plot you generate gets saved to a folder inside <code>analysis</code> called <code>output_images</code></li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./06-rmarkdown.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">RMarkdown for Reproducible Publishable Plots</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./prerequisites.html" class="pagination-link">
+        <span class="nav-page-text">Prerequisites</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
