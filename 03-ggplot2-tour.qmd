@@ -140,7 +140,7 @@ p + geom_point(aes(size=Species,colour=Species,shape=Species))
 ```
 
 ## Quiz
-1. Use the docs at [http://docs.ggplot2.org/current/](http://docs.ggplot2.org/current/) to examine the geoms that are available. Try `geom_jitter()`, why choose this over `geom_point()`? 
+1. Use the docs at [https://ggplot2.tidyverse.org/reference/](https://ggplot2.tidyverse.org/reference/) to examine the geoms that are available. Try `geom_jitter()`, why choose this over `geom_point()`? 
 2. Use this base plot `p <- ggplot(data=iris) + aes(x=Petal.Width, y=Petal.Length)`
 3. What happens if you map a continuous variable to an aesthetic like colour? EG `aes(color=Petal.Width)`
 4. Try combining `geom_smooth()` with `geom_jitter()`
