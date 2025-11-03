@@ -286,7 +286,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#small-multiple-plots" id="toc-small-multiple-plots" class="nav-link" data-scroll-target="#small-multiple-plots"><span class="header-section-number">3.4</span> Small multiple plots</a></li>
   <li><a href="#quiz" id="toc-quiz" class="nav-link" data-scroll-target="#quiz"><span class="header-section-number">3.5</span> Quiz</a></li>
   </ul>
-<div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://tsl-bioinformatics.shinyapps.io/datavixexp_chatbot/" target="_blank"><i class="bi bi-link-45deg"></i>Data Exploration and Visualisation Chatbot</a></li></ul></div></nav>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -340,15 +340,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(diamonds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 10
-  carat cut       color clarity depth table price     x     y     z
-  &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1  0.23 Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
-2  0.21 Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
-3  0.23 Good      E     VS1      56.9    65   327  4.05  4.07  2.31
-4  0.29 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
-5  0.31 Good      J     SI2      63.3    58   335  4.34  4.35  2.75
-6  0.24 Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48</code></pre>
+<pre><code>  carat       cut color clarity depth table price    x    y    z
+1  0.23     Ideal     E     SI2  61.5    55   326 3.95 3.98 2.43
+2  0.21   Premium     E     SI1  59.8    61   326 3.89 3.84 2.31
+3  0.23      Good     E     VS1  56.9    65   327 4.05 4.07 2.31
+4  0.29   Premium     I     VS2  62.4    58   334 4.20 4.23 2.63
+5  0.31      Good     J     SI2  63.3    58   335 4.34 4.35 2.75
+6  0.24 Very Good     J    VVS2  62.8    57   336 3.94 3.96 2.48</code></pre>
 </div>
 </div>
 <p>Here we can see the <code>cut</code>, <code>color</code> and <code>clarity</code> columns are all non-numeric, textual data. These are the factor variables of this dataset. We can confirm that by asking for the <code>class</code> of the column, that is, the type of data in it. We use the dataset <code>$</code> column name syntax for this.</p>

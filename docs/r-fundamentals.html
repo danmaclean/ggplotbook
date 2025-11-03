@@ -288,7 +288,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#quiz" id="toc-quiz" class="nav-link" data-scroll-target="#quiz">Quiz</a></li>
   </ul>
-<div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://tsl-bioinformatics.shinyapps.io/datavixexp_chatbot/" target="_blank"><i class="bi bi-link-45deg"></i>Data Exploration and Visualisation Chatbot</a></li></ul></div></nav>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -410,23 +410,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  [1] -0.03548570  1.46012397 -0.04435303  1.42966937 -0.69315244  0.16896994
-  [7] -0.34957435  0.58066763  0.94742322 -0.21795171 -0.99883753  0.78464616
- [13]  1.20191055  1.45516181  1.28194242 -1.56975941 -0.62503979  0.31038713
- [19] -0.20362370  0.87734737 -1.42437923 -0.28343985  0.79611135 -0.22572899
- [25] -0.67523991 -1.09733299 -2.12264833 -0.97042741 -0.48995629  0.53219754
- [31]  0.73196769 -0.55300891  0.11861166 -0.22127144 -1.07668660  1.22972279
- [37] -2.47114515  0.60282493 -0.57065749 -1.41577595  0.46200967 -2.84538026
- [43]  0.53563577  0.24391481 -1.12674219  0.67143249  2.94794102 -0.49905272
- [49] -1.32768039  0.23890197  0.53940310  0.53444755 -1.31676547 -1.40505653
- [55]  1.80473292 -0.86136267 -0.62705364 -1.03616520 -0.19086318  1.79803018
- [61]  0.83565856 -2.41265215 -0.47677717 -0.37921805  1.03527654  0.86471987
- [67]  0.15736576  1.02863677 -0.51506483 -0.67047859  1.08368862 -0.19860346
- [73] -0.65397211  0.66198037 -0.97014912 -0.16342496 -0.37280414  0.94065716
- [79]  0.40564450  0.67017093  0.14828275 -0.32762283  0.06940595  2.47976845
- [85] -1.16697485 -0.31073539 -0.05093353 -0.49782145  0.81365390  0.13200811
- [91] -0.71111201  1.60120609  1.18892649 -0.27749831  0.42727625  0.43376581
- [97]  0.25220695 -1.09405855  0.31086717 -1.44228719</code></pre>
+<pre><code>  [1]  0.23497577 -0.50593625  0.69190797 -0.12738719  0.06586667 -1.77872278
+  [7]  1.38046891 -1.82210487  1.15388132 -1.05299862  0.03530218  0.46836867
+ [13] -0.43491757 -1.11011982  0.02412711  1.95360130 -0.81498284  0.74666395
+ [19]  0.19118626 -0.93138590 -1.07079066  0.43445657  1.02702015  0.34930989
+ [25] -0.16248858  1.13824495 -0.42041316 -1.10821639 -0.90769166  1.81062602
+ [31]  1.02749224  0.29690194 -0.33797205  0.36214886 -1.50300410 -0.49013573
+ [37]  0.04448221  0.14926529 -0.91210281  0.46403057 -0.17083757 -0.08932776
+ [43]  2.28329237 -0.28871960 -0.62817971 -0.65503189  1.81987348  2.56550836
+ [49] -0.20284925 -1.02391131  0.95188058 -1.72940349  0.31227778  1.29416393
+ [55]  1.03392550 -1.35138316 -0.94030226 -0.51454620 -1.53168125  1.98086226
+ [61] -0.50925405  0.65226505  0.71621917 -2.00502041  0.70552245 -1.08223198
+ [67]  0.38395380  0.62941257 -1.01854736  1.42757334 -0.18642893 -1.54115342
+ [73]  0.17878800  0.39092319  0.42916015 -0.12922303 -1.66076593 -0.56800515
+ [79] -0.43738326  0.57104247  0.28399946 -2.64091430  0.35486141  0.92523732
+ [85]  0.72266169  1.31757190 -0.84746998  0.23426634  0.65883419 -0.47352915
+ [91] -1.40625244  0.62073545  0.01171683  1.07294083  2.15578116  1.19873895
+ [97] -0.29677288  1.14214963  1.30646336 -0.22335256</code></pre>
 </div>
 </div>
 <p>We can combine objects, variables and functions to do more complex stuff in R, here’s how we get the mean of 100 random numbers.</p>
@@ -434,7 +434,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>numbers <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(numbers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.05169116</code></pre>
+<pre><code>[1] -0.03472144</code></pre>
 </div>
 </div>
 <p>Here we created a vector object with <code>rnorm(100)</code> and assigned it to the variable <code>numbers</code>. We than used the <code>mean()</code> function, passing it the variable <code>numbers</code>. The <code>mean()</code> function returned the mean of the hundred random numbers.</p>
